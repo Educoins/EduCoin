@@ -1,0 +1,9 @@
+Building EduCoin
+
+See doc/readme-qt.rst for instructions on building EduCoin-QT,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of EduCoin.
+
+See doc/build-*.txt for instructions on building educoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of EduCoin.
