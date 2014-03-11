@@ -52,8 +52,28 @@ p2pport=33446
 
 testnet=64433
 
-addnode=107.170.47.66
+addnode=54.244.113.139
 
-addnode=162.243.109.193
+addnode=54.202.48.202
 
-addnode=162.243.212.143
+addnode=54.215.133.110
+
+addnode=54.215.130.158
+
+addnode=54.193.71.236
+
+addnode=54.193.60.144
+
+addnode=54.215.139.161
+
+addnode=54.215.138.222
+
+addnode=54.215.139.63
+
+addnode=54.215.136.223
+
+addnode=54.193.122.161
+
+addnode=54.193.114.97
+
+addnode=54.193.127.204 
