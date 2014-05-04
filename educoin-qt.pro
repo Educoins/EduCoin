@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET =
-VERSION = 1.0.0
+VERSION = 1.0.1
 INCLUDEPATH += src src/json src/qt
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd static
@@ -16,8 +16,8 @@ win32 {
  BOOST_LIB_PATH=C:/altcoin/boost_1_49_0/stage/lib
  BDB_INCLUDE_PATH=C:/altcoin/db-5.3.28.NC/build_unix
  BDB_LIB_PATH=C:/altcoin/db-5.3.28.NC/build_unix
- OPENSSL_INCLUDE_PATH=C:/altcoin/openssl-1.0.1f/include
- OPENSSL_LIB_PATH=C:/altcoin/openssl-1.0.1f
+ OPENSSL_INCLUDE_PATH=C:/altcoin/openssl-1.0.1g/include
+ OPENSSL_LIB_PATH=C:/altcoin/openssl-1.0.1g
  MINIUPNPC_INCLUDE_PATH=C:/altcoin/miniupnpc-1.8
  MINIUPNPC_LIB_PATH=C:/altcoin/miniupnpc-1.8
 }
@@ -326,11 +326,11 @@ isEmpty(BOOST_INCLUDE_PATH) {
 }
 
 isEmpty(OPENSSL_INCLUDE_PATH) {
-    macx:OPENSSL_INCLUDE_PATH = /usr/local/Cellar/openssl/1.0.1f/include/
+    macx:OPENSSL_INCLUDE_PATH = /usr/local/Cellar/openssl/1.0.1g/include/
 }
 
 isEmpty(OPENSSL_LIB_PATH) {
-    macx:OPENSSL_LIB_PATH = /usr/local/Cellar/openssl/1.0.1f/lib/
+    macx:OPENSSL_LIB_PATH = /usr/local/Cellar/openssl/1.0.1g/lib/
 }
 
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock
@@ -372,6 +372,8 @@ contains(RELEASE, 1) {
     !windows:!macx {
         # Linux: turn dynamic linking back on for c/c++ runtime libraries
         LIBS += -Wl,-Bdynamic
+        #to link OpenSSL statically need to include its dependencies
+        LIBS += -lz -ldl
     }
 }
 

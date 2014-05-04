@@ -926,10 +926,13 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
             else                { PastDifficultyAverage = ((CBigNum().SetCompact(BlockReading->nBits) - PastDifficultyAveragePrev) / i) + PastDifficultyAveragePrev; }
             PastDifficultyAveragePrev = PastDifficultyAverage;
             
-            PastRateActualSeconds                        = BlockLastSolved->GetBlockTime() - BlockReading->GetBlockTime();
+            PastRateActualSeconds = BlockLastSolved->GetBlockTime() - BlockReading->GetBlockTime();
+
             PastRateTargetSeconds                        = TargetBlocksSpacingSeconds * PastBlocksMass;
             PastRateAdjustmentRatio                        = double(1);
+
             if (PastRateActualSeconds < 0) { PastRateActualSeconds = 0; }
+
             if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
             PastRateAdjustmentRatio                        = double(PastRateTargetSeconds) / double(PastRateActualSeconds);
             }

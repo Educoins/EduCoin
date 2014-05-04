@@ -7,13 +7,13 @@ USE_UPNP:=0
 INCLUDEPATHS= \
  -I"C:\altcoin\boost_1_49_0" \
  -I"C:\altcoin\db-5.3.28.NC\build_unix" \
- -I"C:\altcoin\openssl-1.0.1f\include" 
+ -I"C:\altcoin\openssl-1.0.1g\include"
 
 
 LIBPATHS= \
  -L"C:\altcoin\boost_1_49_0\stage\lib" \
  -L"C:\altcoin\db-5.3.28.NC\build_unix" \
- -L"C:\altcoin\openssl-1.0.1f" 
+ -L"C:\altcoin\openssl-1.0.1g"
 
 LIBS= \
  -l boost_program_options-mgw48-mt-d-1_49 \
