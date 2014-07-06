@@ -87,7 +87,7 @@
      <item>
       <widget class="QPushButton" name="signMessage">
        <property name="toolTip">
-        <string>Sign a message to prove you own a EduCoin address</string>
+        <string>Sign a message to prove you own an EduCoin address</string>
        </property>
        <property name="text">
         <string>&amp;Sign Message</string>
