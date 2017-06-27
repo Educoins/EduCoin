@@ -1,15 +1,12 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2012 Litecoin Developers
-// Copyright (c) 2013 Dogecoin Developers
-// Copyright (c) 2014 Rabbitcoin Developers
-// Copyright (c) 2014 Educoin Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #ifndef BITCOIN_CHECKPOINT_H
 #define  BITCOIN_CHECKPOINT_H
 
 #include <map>
+#include "net.h"
+#include "util.h"
 
 class uint256;
 class CBlockIndex;
@@ -19,14 +16,24 @@ class CBlockIndex;
  */
 namespace Checkpoints
 {
+    typedef std::map<int, uint256> MapCheckpoints;
+
     // Returns true if block passes checkpoint checks
-    bool CheckBlock(int nHeight, const uint256& hash);
+    bool CheckHardened(int nHeight, const uint256& hash);
 
     // Return conservative estimate of total number of blocks, 0 if unknown
     int GetTotalBlocksEstimate();
 
     // Returns last CBlockIndex* in mapBlockIndex that is a checkpoint
     CBlockIndex* GetLastCheckpoint(const std::map<uint256, CBlockIndex*>& mapBlockIndex);
+    CBlockThinIndex* GetLastCheckpoint(const std::map<uint256, CBlockThinIndex*>& mapBlockThinIndex);
+
+    extern MapCheckpoints mapCheckpoints;
+    extern MapCheckpoints mapCheckpointsTestnet;
+
+    const CBlockIndex* AutoSelectSyncCheckpoint();
+    const CBlockThinIndex* AutoSelectSyncThinCheckpoint();
+    bool CheckSync(int nHeight);
 }
 
 #endif

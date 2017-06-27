@@ -1,8 +1,4 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2012 Litecoin Developers
-// Copyright (c) 2013 Dogecoin Developers
-// Copyright (c) 2014 Rabbitcoin Developers
-// Copyright (c) 2014 Educoin Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,13 +7,15 @@
 
 #include "checkpoints.h"
 
+#include "txdb.h"
 #include "main.h"
 #include "uint256.h"
 
+
+static const int nCheckpointSpan = 500;
+
 namespace Checkpoints
 {
-    typedef std::map<int, uint256> MapCheckpoints;
-
     //
     // What makes a good checkpoint block?
     // + Is surrounded by blocks with reasonable timestamps
@@ -25,45 +23,98 @@ namespace Checkpoints
     //    timestamp before)
     // + Contains no strange transactions
     //
+    MapCheckpoints mapCheckpoints =
+        boost::assign::map_list_of
+        ( 0,      uint256("0x0000042bfd2649df99efa68210802bda2cb87adfcfe3e455a735537faf162d51") )
+    ;
 
-    static MapCheckpoints mapCheckpoints =
-      boost::assign::map_list_of
-      (        0, hashGenesisBlockOfficial )
-      (    75000, uint256("0xb9b66c519fc878f51d63560e69aab880723f09b98027c9cce03b2f010565b192"))
-      (   133706, uint256("0xe44023df14a87995d719372d768799ba7a8f344a85c206a67e4283c5b275f33d"))
-			;
+    // TestNet has no checkpoints
+    MapCheckpoints mapCheckpointsTestnet;
 
-
-    bool CheckBlock(int nHeight, const uint256& hash)
+    bool CheckHardened(int nHeight, const uint256& hash)
     {
-        if (fTestNet) return true; // Testnet has no checkpoints
+        MapCheckpoints& checkpoints = (fTestNet ? mapCheckpointsTestnet : mapCheckpoints);
 
-        MapCheckpoints::const_iterator i = mapCheckpoints.find(nHeight);
-        if (i == mapCheckpoints.end()) return true;
+        MapCheckpoints::const_iterator i = checkpoints.find(nHeight);
+        if (i == checkpoints.end())
+            return true;
         return hash == i->second;
-		// return true;
     }
 
     int GetTotalBlocksEstimate()
     {
-        if (fTestNet) return 0;
-	
-        return mapCheckpoints.rbegin()->first;
-		// return 0;
+        MapCheckpoints& checkpoints = (fTestNet ? mapCheckpointsTestnet : mapCheckpoints);
+
+        if (checkpoints.empty())
+            return 0;
+        return checkpoints.rbegin()->first;
     }
 
     CBlockIndex* GetLastCheckpoint(const std::map<uint256, CBlockIndex*>& mapBlockIndex)
     {
-        if (fTestNet) return NULL;
+        MapCheckpoints& checkpoints = (fTestNet ? mapCheckpointsTestnet : mapCheckpoints);
 
-        BOOST_REVERSE_FOREACH(const MapCheckpoints::value_type& i, mapCheckpoints)
+        BOOST_REVERSE_FOREACH(const MapCheckpoints::value_type& i, checkpoints)
         {
             const uint256& hash = i.second;
             std::map<uint256, CBlockIndex*>::const_iterator t = mapBlockIndex.find(hash);
             if (t != mapBlockIndex.end())
                 return t->second;
-				// return NULL;
         }
         return NULL;
+    }
+
+    CBlockThinIndex* GetLastCheckpoint(const std::map<uint256, CBlockThinIndex*>& mapBlockThinIndex)
+    {
+        MapCheckpoints& checkpoints = (fTestNet ? mapCheckpointsTestnet : mapCheckpoints);
+
+        BOOST_REVERSE_FOREACH(const MapCheckpoints::value_type& i, checkpoints)
+        {
+            const uint256& hash = i.second;
+            std::map<uint256, CBlockThinIndex*>::const_iterator t = mapBlockThinIndex.find(hash);
+            if (t != mapBlockThinIndex.end())
+                return t->second;
+        }
+        return NULL;
+    }
+
+
+    // Automatically select a suitable sync-checkpoint 
+    const CBlockIndex* AutoSelectSyncCheckpoint()
+    {
+        const CBlockIndex *pindex = pindexBest;
+        // Search backward for a block within max span and maturity window
+        while (pindex->pprev && pindex->nHeight + nCheckpointSpan > pindexBest->nHeight)
+            pindex = pindex->pprev;
+        return pindex;
+    }
+
+    // Automatically select a suitable sync-checkpoint - Thin mode
+    const CBlockThinIndex* AutoSelectSyncThinCheckpoint()
+    {
+        const CBlockThinIndex *pindex = pindexBestHeader;
+        // Search backward for a block within max span and maturity window
+        while (pindex->pprev && pindex->nHeight + nCheckpointSpan > pindexBest->nHeight)
+            pindex = pindex->pprev;
+        return pindex;
+    }
+
+    // Check against synchronized checkpoint
+    bool CheckSync(int nHeight)
+    {
+        if(nNodeMode == NT_FULL)
+        {
+            const CBlockIndex* pindexSync = AutoSelectSyncCheckpoint();
+
+            if (nHeight <= pindexSync->nHeight)
+                return false;
+        }
+        else {
+            const CBlockThinIndex *pindexSync = AutoSelectSyncThinCheckpoint();
+
+            if (nHeight <= pindexSync->nHeight)
+                return false;
+        }
+        return true;
     }
 }

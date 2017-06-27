@@ -4,6 +4,7 @@
 #include <QString>
 #include <QObject>
 #include <QMessageBox>
+#include <stdint.h>
 
 QT_BEGIN_NAMESPACE
 class QFont;
@@ -15,25 +16,44 @@ class QAbstractItemView;
 QT_END_NAMESPACE
 class SendCoinsRecipient;
 
-/** Utility functions used by the EduCoin Qt UI.
+/** Utility functions used by the Bitcoin Qt UI.
  */
 namespace GUIUtil
 {
     // Create human-readable string from date
     QString dateTimeStr(const QDateTime &datetime);
     QString dateTimeStr(qint64 nTime);
+    
+    /* Convert seconds into a QString with days, hours, mins, secs */
+    QString formatDurationStr(int secs);
+    
+    /* Format CNodeStats.nServices bitmask into a user-readable string */
+    QString formatServicesStr(quint64 mask);
 
-    // Render EduCoin addresses in monospace font
+    /* Format a CNodeCombinedStats.dPingTime into a user-readable string or display N/A, if 0*/
+    QString formatPingTime(double dPingTime);
+
+    /* Format a CNodeCombinedStats.nTimeOffset into a user-readable string. */
+    QString formatTimeOffset(int64_t nTimeOffset);
+    
+
+    // Render Bitcoin addresses in monospace font
     QFont bitcoinAddressFont();
 
     // Set up widgets for address and amounts
     void setupAddressWidget(QLineEdit *widget, QWidget *parent);
     void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
-    // Parse "educoin:" URI into recipient object, return true on succesful parsing
+    // Parse "EduCoin:" URI into recipient object, return true on successful parsing
     // See Bitcoin URI definition discussion here: https://bitcointalk.org/index.php?topic=33490.0
     bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
     bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
+    
+    /** Save window size and position */
+    void saveWindowGeometry(const QString& strSetting, QWidget *parent);
+    /** Restore window size and position */
+    void restoreWindowGeometry(const QString& strSetting, const QSize &defaultSizeIn, QWidget *parent);
+
 
     // HTML escaping for rich text controls
     QString HtmlEscape(const QString& str, bool fMultiLine=false);
@@ -47,7 +67,7 @@ namespace GUIUtil
      */
     void copyEntryData(QAbstractItemView *view, int column, int role=Qt::EditRole);
 
-    /** Get save file name, mimics QFileDialog::getSaveFileName, except that it appends a default suffix
+    /** Get save filename, mimics QFileDialog::getSaveFileName, except that it appends a default suffix
         when no suffix is provided by the user.
 
       @param[in] parent  Parent window (or 0)
@@ -95,7 +115,7 @@ namespace GUIUtil
     bool GetStartOnSystemStartup();
     bool SetStartOnSystemStartup(bool fAutoStart);
 
-    /** Help message for EduCoin-Qt, shown with --help. */
+    /** Help message for Bitcoin-Qt, shown with --help. */
     class HelpMessageBox : public QMessageBox
     {
         Q_OBJECT

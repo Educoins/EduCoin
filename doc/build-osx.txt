@@ -1,58 +1,52 @@
 Copyright (c) 2009-2012 Bitcoin Developers
-Copyright (c) 2011-2012 Litecoin Developers
-Copyright (c) 2013-2014 Dogecoin Developers
-Copyright (c) 2014 Rabbitcoin Developers
-Copyright (c) 2014 Educoin Developers
-
-Distributed under the MIT/X11 software license, see the accompanying
-file COPYING or http://www.opensource.org/licenses/mit-license.php.
-This product includes software developed by the OpenSSL Project for use in
-the OpenSSL Toolkit (http://www.openssl.org/).  This product includes
-cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP
-software written by Thomas Bernard.
-
------------------------------------------------------------------------------------------------------
-Mavericks build instructions
------------------------------------------------------------------------------------------------------
-
-The latest version of the educoin-qt.pro file is geared more towards building on Mavericks using
-brew for dependencies.
-
-1) Install Homebrew - http://brew.sh/
-
-2) Make sure you have the following brewed:
-brew install boost
-brew install berkeley-db
-brew install libtool
-brew install miniupnpc
-brew install openssl
-brew install qt
-
-3) Make sure you have the Xcode developer command line tools installed (brew will instruct you to install them as well)
-
-4) You can now try to build the QT file. From the educoin folder in a command prompt, try:
-qmake "USE_UPNP=1 RELEASE=1" educoin-qt.pro
-
-then
-
-5) You can now try to build commandline client:
-make -f Makefile
-		
-6) to package it use
-source .env/bin/activate
-contrib/macdeploy/macdeployqtplus Educoin-Qt.app -add-qt-tr da,de,es,hu,ru,uk,zh_CN,zh_TW -dmg -fancy contrib/macdeploy/fancy.plist -verbose 2
+Distributed under the MIT/X11 software license, see the accompanying file
+license.txt or http://www.opensource.org/licenses/mit-license.php.  This
+product includes software developed by the OpenSSL Project for use in the
+OpenSSL Toolkit (http://www.openssl.org/).  This product includes cryptographic
+software written by Eric Young (eay@cryptsoft.com) and UPnP software written by
+Thomas Bernard.
 
 
-Dependencies
-------------
+Mac OS X EduCoind build instructions
+Laszlo Hanyecz <solar@heliacal.net>
+Douglas Huff <dhuff@jrbobdobbs.org>
 
- Library |    Version|  Purpose|            Description
- ------- |     ------|  -------|            -----------
- libssl  |     1.0.1g  | SSL Support |      Secure communications (cli daemon liked on 0.9.8)
- libdb   |     5.2.28  | Berkeley DB |      Blockchain & wallet storage
- libboost|     1.55.0  | Boost       |      C++ Library
- miniupnpc  |  1.6.3   | UPnP Support|      Optional firewall-jumping support
- libqrencode|  3.4.1   | QRCode generation| Optional QRCode generation
- llvm-g++   |  4:4.7.3 ||
 
- See licenses.txt for license details
+See readme-qt.rst for instructions on building EduCoin QT, the
+graphical user interface.
+
+Tested on 10.5 and 10.6 intel.  PPC is not supported because it's big-endian.
+
+All of the commands should be executed in Terminal.app.. it's in
+/Applications/Utilities
+
+You need to install XCode with all the options checked so that the compiler and
+everything is available in /usr not just /Developer I think it comes on the DVD
+but you can get the current version from http://developer.apple.com
+
+
+1.  Clone the github tree to get the source code:
+
+2.  Download and install MacPorts from http://www.macports.org/
+
+2a. (for 10.7 Lion)
+    Edit /opt/local/etc/macports/macports.conf and uncomment "build_arch i386"
+
+3.  Install dependencies from MacPorts
+
+sudo port install boost db48 openssl miniupnpc
+
+Optionally install qrencode (and set USE_QRCODE=1):
+sudo port install qrencode
+
+4.  Now you should be able to build EduCoind:
+
+cd EduCoin/src
+make -f makefile.osx
+
+Run:
+  ./EduCoind --help  # for a list of command-line options.
+Run
+  ./EduCoind -daemon # to start the EduCoin daemon.
+Run
+  ./EduCoind help # When the daemon is running, to get a list of RPC commands

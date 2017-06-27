@@ -1,16 +1,14 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2012 Litecoin Developers
-// Copyright (c) 2013 Dogecoin Developers
-// Copyright (c) 2014 Rabbitcoin Developers
-// Copyright (c) 2014 Educoin Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #ifndef _BITCOIN_COMPAT_H
 #define _BITCOIN_COMPAT_H 1
 
 #ifdef WIN32
+#ifdef _WIN32_WINNT
+#undef _WIN32_WINNT
+#endif
 #define _WIN32_WINNT 0x0501
 #define WIN32_LEAN_AND_MEAN 1
 #ifndef NOMINMAX
@@ -28,9 +26,12 @@
 #include <net/if.h>
 #include <netinet/in.h>
 #include <ifaddrs.h>
-#endif
+#include <unistd.h>
 
 typedef u_int SOCKET;
+#endif
+
+
 #ifdef WIN32
 #define MSG_NOSIGNAL        0
 #define MSG_DONTWAIT        0

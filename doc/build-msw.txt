@@ -1,18 +1,13 @@
 Copyright (c) 2009-2012 Bitcoin Developers
-Copyright (c) 2011-2012 Litecoin Developers
-Copyright (c) 2013-2014 Dogecoin Developers
-Copyright (c) 2014 Rabbitcoin Developers
-Copyright (c) 2014 Educoin Developers
-
 Distributed under the MIT/X11 software license, see the accompanying
-file COPYING or http://www.opensource.org/licenses/mit-license.php.
+file license.txt or http://www.opensource.org/licenses/mit-license.php.
 This product includes software developed by the OpenSSL Project for use in
 the OpenSSL Toolkit (http://www.openssl.org/).  This product includes
 cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP
 software written by Thomas Bernard.
 
 
-See readme-qt.rst for instructions on building Educoin-QT, the
+See readme-qt.rst for instructions on building EduCoin QT, the
 graphical user interface.
 
 WINDOWS BUILD NOTES
@@ -29,9 +24,9 @@ Dependencies
 Libraries you need to download separately and build:
 
                 default path               download
-OpenSSL         \openssl-1.0.1f            http://www.openssl.org/source/
-Berkeley DB     \db-5.3.28.NC-mgw          http://www.oracle.com/technology/software/products/berkeley-db/index.html
-Boost           \boost-1.49.0-mgw          http://www.boost.org/users/download/
+OpenSSL         \openssl-1.0.1b-mgw        http://www.openssl.org/source/
+Berkeley DB     \db-4.8.30.NC-mgw          http://www.oracle.com/technology/software/products/berkeley-db/index.html
+Boost           \boost-1.47.0-mgw          http://www.boost.org/users/download/
 miniupnpc       \miniupnpc-1.6-mgw         http://miniupnp.tuxfamily.org/files/
 
 Their licenses:
@@ -41,50 +36,34 @@ Boost          MIT-like license
 miniupnpc      New (3-clause) BSD license
 
 Versions used in this release:
-OpenSSL      1.0.1g
-Berkeley DB  5.3.28.NC
-Boost        1.49.0
+OpenSSL      1.0.1b
+Berkeley DB  4.8.30.NC
+Boost        1.47.0
 miniupnpc    1.6
-
-
-Mingw
--------
-Download the installer from http://sourceforge.net/projects/mingw/files/Installer/
-Run it, install ONLY Msys.
-
-Download and install toolchain http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.8.2/threads-posix/dwarf/i686-4.8.2-release-posix-dwarf-rt_v3-rev2.7z/download
-
-Add MinGW install folder to your PATH environment (C:\mingw32\bin)
 
 
 OpenSSL
 -------
 MSYS shell:
 un-tar sources with MSYS 'tar xfz' to avoid issue with symlinks (OpenSSL ticket 2377)
+change 'MAKE' env. variable from 'C:\MinGW32\bin\mingw32-make.exe' to '/c/MinGW32/bin/mingw32-make.exe'
 
-cd /c/openssl-1.0.1f-mgw
+cd /c/openssl-1.0.1b-mgw
 ./config
 make
 
 Berkeley DB
 -----------
 MSYS shell:
-cd /c/db-5.3.28.NC/build_unix
- 
- in db.5.3.28.NC/build_unix/db.h
- /* Thread and process identification. */
- typedef u_int32_t db_threadid_t;
-
-sh ../dist/configure  --enable-pthread_self --enable-mingw --enable-cxx
+cd /c/db-4.8.30.NC-mgw/build_unix
+sh ../dist/configure --enable-mingw --enable-cxx
 make
 
 Boost
 -----
 DOS prompt:
-cd \boost-1.49.0-mgw
- apply https://svn.boost.org/trac/boost/ticket/6797
- apply https://svn.boost.org/trac/boost/changeset/79334
-http://stackoverflow.com/questions/7847454/how-do-i-install-the-boost-library-to-my-mingw-compiler
+downloaded boost jam 3.1.18
+cd \boost-1.47.0-mgw
 bjam toolset=gcc --build-type=complete stage
 
 MiniUPnPc
@@ -97,9 +76,9 @@ make -f Makefile.mingw
 mkdir miniupnpc
 cp *.h miniupnpc/
 
-Educoin
-----------
+EduCoin
+-------
 DOS prompt:
-cd \educoin\src
+cd \EduCoin\src
 mingw32-make -f makefile.mingw
-strip educoind.exe
+strip EduCoind.exe

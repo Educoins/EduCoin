@@ -3,7 +3,22 @@
 
 #include <QObject>
 
+enum BlockSource {
+    BLOCK_SOURCE_NONE,
+    BLOCK_SOURCE_REINDEX,
+    BLOCK_SOURCE_DISK,
+    BLOCK_SOURCE_NETWORK
+};
+
+enum NumConnections {
+    CONNECTIONS_NONE = 0,
+    CONNECTIONS_IN   = (1U << 0),
+    CONNECTIONS_OUT  = (1U << 1),
+    CONNECTIONS_ALL  = (CONNECTIONS_IN | CONNECTIONS_OUT),
+};
+
 class OptionsModel;
+class PeerTableModel;
 class AddressTableModel;
 class TransactionTableModel;
 class CWallet;
@@ -21,49 +36,34 @@ public:
     explicit ClientModel(OptionsModel *optionsModel, QObject *parent = 0);
     ~ClientModel();
 
-    enum MiningType
-    {
-        SoloMining,
-        PoolMining
-    };
-
     OptionsModel *getOptionsModel();
+    PeerTableModel *getPeerTableModel();
 
-    int getNumConnections() const;
+    //! Return number of connections, default is in- and outbound (total)
+    int getNumConnections(unsigned int flags = CONNECTIONS_ALL) const;
     int getNumBlocks() const;
     int getNumBlocksAtStartup();
-    MiningType getMiningType() const;
-    int getMiningThreads() const;
-    bool getMiningStarted() const;
 
-    bool getMiningDebug() const;
-    void setMiningDebug(bool debug);
-    int getMiningScanTime() const;
-    void setMiningScanTime(int scantime);
-    QString getMiningServer() const;
-    void setMiningServer(QString server);
-    QString getMiningPort() const;
-    void setMiningPort(QString port);
-    QString getMiningUsername() const;
-    void setMiningUsername(QString username);
-    QString getMiningPassword() const;
-    void setMiningPassword(QString password);
-
-    int getHashrate() const;
-    double GetDifficulty() const;
+    quint64 getTotalBytesRecv() const;
+    quint64 getTotalBytesSent() const;
 
     QDateTime getLastBlockDate() const;
+    QDateTime getLastBlockThinDate() const;
 
     //! Return true if client connected to testnet
     bool isTestNet() const;
+    
+    //! mode (thin/full) client is running in
+    int getClientMode() const;
+    
     //! Return true if core is doing initial block download
     bool inInitialBlockDownload() const;
     //! Return conservative estimate of total number of blocks, or 0 if unknown
     int getNumBlocksOfPeers() const;
+    //! Return true if core is importing blocks
+    bool isImporting() const;
     //! Return warnings to be displayed in status bar
     QString getStatusBarWarnings() const;
-
-    void setMining(MiningType type, bool mining, int threads, int hashrate);
 
     QString formatFullVersion() const;
     QString formatBuildDate() const;
@@ -72,20 +72,10 @@ public:
 
 private:
     OptionsModel *optionsModel;
+    PeerTableModel *peerTableModel;
 
     int cachedNumBlocks;
     int cachedNumBlocksOfPeers;
-    int cachedHashrate;
-
-    MiningType miningType;
-    int miningThreads;
-    bool miningStarted;
-    bool miningDebug;
-    int miningScanTime;
-    QString miningServer;
-    QString miningPort;
-    QString miningUsername;
-    QString miningPassword;
 
     int numBlocksAtStartup;
 
@@ -96,7 +86,7 @@ private:
 signals:
     void numConnectionsChanged(int count);
     void numBlocksChanged(int count, int countOfPeers);
-    void miningChanged(bool mining, int count);
+    void bytesChanged(quint64 totalBytesIn, quint64 totalBytesOut);
 
     //! Asynchronous error notification
     void error(const QString &title, const QString &message, bool modal);

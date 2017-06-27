@@ -4,7 +4,6 @@
 #include "bitcoinunits.h"
 #include "util.h"
 #include "init.h"
-#include "base58.h"
 
 #include <QString>
 #include <QDateTime>
@@ -18,7 +17,9 @@
 #include <QClipboard>
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QThread>
+#include <QSettings>
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -53,10 +54,87 @@ QString dateTimeStr(qint64 nTime)
     return dateTimeStr(QDateTime::fromTime_t((qint32)nTime));
 }
 
+QString formatDurationStr(int secs)
+{
+    QStringList strList;
+    int days = secs / 86400;
+    int hours = (secs % 86400) / 3600;
+    int mins = (secs % 3600) / 60;
+    int seconds = secs % 60;
+
+    if (days)
+        strList.append(QString(QObject::tr("%1 d")).arg(days));
+    if (hours)
+        strList.append(QString(QObject::tr("%1 h")).arg(hours));
+    if (mins)
+        strList.append(QString(QObject::tr("%1 m")).arg(mins));
+    if (seconds || (!days && !hours && !mins))
+        strList.append(QString(QObject::tr("%1 s")).arg(seconds));
+
+    return strList.join(" ");
+}
+
+QString formatServicesStr(quint64 mask)
+{
+    QStringList strList;
+    
+    // TODO: add vtr
+    // Just scan the last 8 bits for now.
+    for (int i = 0; i < 8; i++)
+    {
+        uint64_t check = 1 << i;
+        if (!(mask & check))
+            continue;
+        switch (check)
+        {
+            case NODE_NETWORK:
+                strList.append("NETWORK");
+                break;
+            //case NODE_GETUTXO:
+            //    strList.append("GETUTXO");
+            //    break;
+            
+            case THIN_SUPPORT:
+                strList.append("THIN_SUPPORT");
+                break;
+            case THIN_STAKE:
+                strList.append("THIN_STAKE");
+                break;
+            case THIN_STEALTH:
+                strList.append("THIN_STEALTH");
+                break;
+            case SMSG_RELAY:
+                strList.append("SMSG_RELAY");
+                break;
+            default:
+                strList.append(QString("%1[%2]").arg("UNKNOWN").arg(check));
+        };
+    };
+
+    if (strList.size())
+        return strList.join(", ");
+    else
+        return QObject::tr("None");
+}
+
+QString formatPingTime(double dPingTime)
+{
+    return dPingTime == 0 ? QObject::tr("N/A") : QString(QObject::tr("%1 ms")).arg(QString::number((int)(dPingTime * 1000), 10));
+}
+
+QString formatTimeOffset(int64_t nTimeOffset)
+{
+  return QString(QObject::tr("%1 s")).arg(QString::number((int)nTimeOffset, 10));
+}
+
 QFont bitcoinAddressFont()
 {
     QFont font("Monospace");
+#if QT_VERSION >= 0x040800
+    font.setStyleHint(QFont::Monospace);
+#else
     font.setStyleHint(QFont::TypeWriter);
+#endif
     return font;
 }
 
@@ -78,12 +156,8 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    if(uri.scheme() != QString("educoin"))
-        return false;
-
-    // check if the address is valid
-    CBitcoinAddress addressFromUri(uri.path().toStdString());
-    if (!addressFromUri.IsValid())
+    // NovaCoin: check prefix
+    if(uri.scheme() != QString("EduCoin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -108,7 +182,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::BTC, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::EDU, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -128,16 +202,39 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert educoin:// to educoin:
+    // Convert EduCoin:// to EduCoin:
     //
-    //    Cannot handle this later, because educoin:// will cause Qt to see the part after // as host,
-    //    which will lowercase it (and thus invalidate the address).
-    if(uri.startsWith("educoin://"))
+    //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
+    //    which will lower-case it (and thus invalidate the address).
+    if(uri.startsWith("EduCoin://"))
     {
-        uri.replace(0, 11, "educoin:");
+        uri.replace(0, 12, "EduCoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
+}
+
+void saveWindowGeometry(const QString& strSetting, QWidget *parent)
+{
+    QSettings settings;
+    settings.setValue(strSetting + "Pos", parent->pos());
+    settings.setValue(strSetting + "Size", parent->size());
+}
+
+void restoreWindowGeometry(const QString& strSetting, const QSize& defaultSize, QWidget *parent)
+{
+    QSettings settings;
+    QPoint pos = settings.value(strSetting + "Pos").toPoint();
+    QSize size = settings.value(strSetting + "Size", defaultSize).toSize();
+
+    if (!pos.x() && !pos.y()) {
+        QRect screen = QApplication::desktop()->screenGeometry();
+        pos.setX((screen.width() - size.width()) / 2);
+        pos.setY((screen.height() - size.height()) / 2);
+    }
+
+    parent->resize(size);
+    parent->move(pos);
 }
 
 QString HtmlEscape(const QString& str, bool fMultiLine)
@@ -263,11 +360,11 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
     {
         QWidget *widget = static_cast<QWidget*>(obj);
         QString tooltip = widget->toolTip();
-        if(tooltip.size() > size_threshold && !tooltip.startsWith("<qt/>") && !Qt::mightBeRichText(tooltip))
+        if(tooltip.size() > size_threshold && !tooltip.startsWith("<qt>") && !Qt::mightBeRichText(tooltip))
         {
             // Prefix <qt/> to make sure Qt detects this as rich text
             // Escape the current message as HTML and replace \n by <br>
-            tooltip = "<qt/>" + HtmlEscape(tooltip, true);
+            tooltip = "<qt>" + HtmlEscape(tooltip, true) + "<qt/>";
             widget->setToolTip(tooltip);
             return true;
         }
@@ -283,7 +380,7 @@ boost::filesystem::path static StartupShortcutPath()
 
 bool GetStartOnSystemStartup()
 {
-    // check for EduCoin.lnk
+    // check for Bitcoin.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -342,7 +439,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     return true;
 }
 
-#elif defined(LINUX)
+#elif defined(Q_OS_LINUX)
 
 // Follow the Desktop Application Autostart Spec:
 //  http://standards.freedesktop.org/autostart-spec/autostart-spec-latest.html
@@ -360,7 +457,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "educoin.desktop";
+    return GetAutostartDir() / "EduCoin.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -398,13 +495,17 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         boost::filesystem::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out|std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a educoin.desktop file to the autostart directory:
-        optionFile << "[Desktop Entry]\n";
-        optionFile << "Type=Application\n";
-        optionFile << "Name=EduCoin\n";
-        optionFile << "Exec=" << pszExePath << " -min\n";
-        optionFile << "Terminal=false\n";
-        optionFile << "Hidden=false\n";
+        // Write a bitcoin.desktop file to the autostart directory:
+        optionFile << "[Desktop Entry]\n" \
+                   << "Version=" << FormatFullVersion() << "\n" \
+                   << "Type=Application\n" \
+                   << "Name=EduCoin\n" \
+                   << "Exec=" << pszExePath << "%u -min\n" \
+                   << "Icon=" <<  QFileInfo(":/icons/bitcoin").absoluteFilePath().toStdString() << "\n" \
+                   << "Terminal=false\n" \
+                   << "Hidden=false\n" \
+                   << "Categories=Application;Network;\n" \
+                   << "MimeType=x-scheme-handler/EduCoin;\n";
         optionFile.close();
     }
     return true;
@@ -422,10 +523,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("EduCoin-Qt") + " " + tr("version") + " " +
+    header = tr("EduCoin") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  educoin-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  EduCoin [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -434,9 +535,9 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("EduCoin-Qt"));
+    setWindowTitle(tr("EduCoin"));
     setTextFormat(Qt::PlainText);
-    // setMinimumWidth is ignored for QMessageBox so put in nonbreaking spaces to make it wider.
+    // setMinimumWidth is ignored for QMessageBox so put in non-breaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));
     setDetailedText(coreOptions + "\n" + uiOptions);
 }
@@ -445,13 +546,13 @@ void HelpMessageBox::printToConsole()
 {
     // On other operating systems, the expected action is to print the message to the console.
     QString strUsage = header + "\n" + coreOptions + "\n" + uiOptions;
-    fprintf(stderr, "%s", strUsage.toStdString().c_str());
+    fprintf(stdout, "%s", strUsage.toStdString().c_str());
 }
 
 void HelpMessageBox::showOrPrint()
 {
 #if defined(WIN32)
-        // On windows, show a message box, as there is no stderr/stdout in windowed applications
+        // On Windows, show a message box, as there is no stderr/stdout in windowed applications
         exec();
 #else
         // On other operating systems, print help text to console
