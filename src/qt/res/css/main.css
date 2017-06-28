@@ -1873,10 +1873,10 @@ label.recipient {
 /* Icons styling */
 
 .staking {
-    color: rgb(18, 121, 59);
+    color: #6c8c3c;
 }
 .not-staking {
-    opacity: 0.3;
+    color: #D62C2C;
 }
 
 
@@ -1937,6 +1937,10 @@ label.recipient {
 
 .grey {
     color: #C0C0C0;
+}
+
+.edugreen {
+	color: #6c8c3c
 }
 
 .height10percent {

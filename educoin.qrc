@@ -8,8 +8,8 @@
 		<file alias="EduCoin-64">src/qt/res/icons/EduCoin-64.png</file>
 		<file alias="EduCoin-80">src/qt/res/icons/EduCoin-80.png</file>
         <file alias="EduCoin-128">src/qt/res/icons/EduCoin-128.png</file>
-        <file alias="address-book">src/qt/res/icons/address-book.png</file>
-		<file alias="EduCoin_icon">src/qt/res/icons/EduCoin_icon.png</file>	
+		<file alias="EduCoin_icon">src/qt/res/icons/EduCoin_icon.png</file>
+		<file alias="address-book">src/qt/res/icons/address-book.png</file>
         <file alias="connect_0">src/qt/res/icons/connect0_16.png</file>
         <file alias="connect_1">src/qt/res/icons/connect1_16.png</file>
         <file alias="connect_2">src/qt/res/icons/connect2_16.png</file>
@@ -46,14 +46,11 @@
         <file alias="tradeat_bittrex">src/qt/res/icons/tradeat_bittrex.png</file>
     </qresource>
     <qresource prefix="/images">
-        <file alias="about">src/qt/res/images/about.png</file>
         <file alias="splash">src/qt/res/images/splash.png</file>
-        <file alias="edu-vertical">src/qt/res/images/edu-vertical.png</file>
         <file alias="default">src/qt/res/images/avatars/default.png</file>
         <file alias="extkey_new">src/qt/res/images/extkey_new.png</file>
         <file alias="extkey_open">src/qt/res/images/extkey_open.png</file>
         <file alias="extkey_recover">src/qt/res/images/extkey_recover.png</file>
-        <file alias="bittrex_lg">src/qt/res/images/bittrex_lg.png</file>
     </qresource>
     <qresource prefix="/css">
         <file alias="main.css">src/qt/res/css/main.css</file>
