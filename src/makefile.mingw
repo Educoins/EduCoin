@@ -116,9 +116,6 @@ OBJS= \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/scrypt.o \
-    obj/scrypt-arm.o \
-    obj/scrypt-x86.o \
-    obj/scrypt-x86_64.o \
     obj/smessage.o \
     obj/stealth.o \
     obj/ringsig.o \
@@ -126,7 +123,8 @@ OBJS= \
     obj/txmempool.o \
     obj/chainparams.o \
     obj/state.o \
-    obj/bloom.o 
+    obj/bloom.o \
+	obj/keccak.o
 
 all: EduCoind.exe
 
@@ -154,14 +152,12 @@ EduCoind.exe: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS) -lshlwapi
 	strip EduCoind.exe
 
-obj/scrypt-x86.o: scrypt-x86.S
-	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
-
-obj/scrypt-x86_64.o: scrypt-x86_64.S
-	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
-
-obj/scrypt-arm.o: scrypt-arm.S
-	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
+obj/%.o: %.c
+	$(CXX) -c $(xCXXFLAGS) -fpermissive -MMD -MF $(@:%.o=%.d) -o $@ $<
+	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
+	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
+	  rm -f $(@:%.o=%.d)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
 
