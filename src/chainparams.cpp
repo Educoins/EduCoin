@@ -140,7 +140,7 @@ public:
         pchMessageStart[1] = 0xf2;
         pchMessageStart[2] = 0xef;
         pchMessageStart[3] = 0xb4;        
-        vAlertPubKey = ParseHex("0418853e2f8c4629f09b49ce09c6ef051928c1dc3ce175b26d2c37300226b5699d5e3ff3e834722ff05fb86c4b69597d58bb8d81d1841dd22911f25ff4d5273d13");        
+        vAlertPubKey = ParseHex("715d8f1537e487ef7d38d155c2066c352772bc0fa4fa123418566747b315f1d4");        
         nDefaultPort = 17389;
         nRPCPort = 17388;
         nFirstPosv3Block = 1;
