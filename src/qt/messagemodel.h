@@ -1,11 +1,11 @@
 #ifndef MESSAGEMODEL_H
 #define MESSAGEMODEL_H
 
-#include "uint256.h"
+#include "../uint256.h"
 
 #include <vector>
-#include "allocators.h" /* for SecureString */
-#include "smessage.h"
+#include "../allocators.h" /* for SecureString */
+#include "../smessage.h"
 #include <map>
 #include <QAbstractTableModel>
 #include <QStringList>
