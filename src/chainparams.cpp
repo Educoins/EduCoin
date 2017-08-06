@@ -264,7 +264,7 @@ public:
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
-        genesis.nTime = 1411111111;
+        genesis.nTime = 1498442475;
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
         genesis.nNonce = 0;
         hashGenesisBlock = genesis.GetHash();

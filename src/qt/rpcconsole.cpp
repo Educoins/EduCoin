@@ -10,13 +10,13 @@
 #include "peertablemodel.h"
 #include "scicon.h"
 
-#include "main.h"
-#include "chainparams.h"
-#include "rpcserver.h"
-#include "rpcclient.h"
-#include "util.h"
+#include "../main.h"
+#include "../chainparams.h"
+#include "../rpcserver.h"
+#include "../rpcclient.h"
+#include "../util.h"
 
-#include "json/json_spirit_value.h"
+#include "../json/json_spirit_value.h"
 
 #include <openssl/crypto.h>
 #include <db_cxx.h>

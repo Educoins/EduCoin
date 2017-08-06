@@ -5,8 +5,8 @@
 #ifndef BITCOIN_QT_PEERTABLEMODEL_H
 #define BITCOIN_QT_PEERTABLEMODEL_H
 
-#include "main.h"
-#include "net.h"
+#include "../main.h"
+#include "../net.h"
 
 #include <QAbstractTableModel>
 #include <QStringList>

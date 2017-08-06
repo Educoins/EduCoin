@@ -6,10 +6,10 @@
 #include "messagemodel.h"
 #include "addresstablemodel.h"
 
-#include "ui_interface.h"
-#include "base58.h"
-#include "json_spirit.h"
-#include "init.h"
+#include "../ui_interface.h"
+#include "../base58.h"
+#include "../json/json_spirit.h"
+#include "../init.h"
 
 #include <QSet>
 #include <QTimer>

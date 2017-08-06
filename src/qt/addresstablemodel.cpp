@@ -2,11 +2,11 @@
 #include "guiutil.h"
 #include "walletmodel.h"
 
-#include "wallet.h"
+#include "../wallet.h"
 
-#include "base58.h"
-#include "stealth.h"
-#include "extkey.h"
+#include "../base58.h"
+#include "../stealth.h"
+#include "../extkey.h"
 
 #include <QFont>
 #include <QColor>
