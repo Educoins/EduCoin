@@ -10,6 +10,7 @@
 #include "kernel.h"
 #include "checkpoints.h"
 #include <errno.h>
+#include <unistd.h>
 
 
 using namespace json_spirit;
