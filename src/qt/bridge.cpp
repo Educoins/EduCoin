@@ -18,16 +18,16 @@
 #include "optionsmodel.h"
 
 #include "bitcoinunits.h"
-#include "../coincontrol.h"
+#include "coincontrol.h"
 #include "coincontroldialog.h"
-#include "../ringsig.h"
+#include "ringsig.h"
 
 #include "askpassphrasedialog.h"
 
-#include "../txdb.h"
-#include "../state.h"
+#include "txdb.h"
+#include "state.h"
 
-#include "../extkey.h"
+#include "extkey.h"
 
 #ifdef TRADING_BITTREX
 #include "tradingdialog_bittrex.h"

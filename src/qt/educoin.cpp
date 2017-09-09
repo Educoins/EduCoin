@@ -11,8 +11,8 @@
 #include "guiconstants.h"
 #include "paymentserver.h"
 
-#include "../init.h"
-#include "../ui_interface.h"
+#include "init.h"
+#include "ui_interface.h"
 
 #include <QApplication>
 #include <QMessageBox>

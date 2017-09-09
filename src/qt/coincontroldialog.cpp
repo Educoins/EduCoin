@@ -3,12 +3,12 @@
 
 #include "bridge.h"
 
-#include "../init.h"
+#include "init.h"
 #include "bitcoinunits.h"
 #include "walletmodel.h"
 #include "addresstablemodel.h"
 #include "optionsmodel.h"
-#include "../coincontrol.h"
+#include "coincontrol.h"
 
 #include <QApplication>
 #include <QCheckBox>
