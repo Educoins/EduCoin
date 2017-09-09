@@ -103,7 +103,7 @@ static void convertSeeds(std::vector<CAddress> &vSeedsOut, const unsigned int *d
 class CBaseChainParams : public CChainParams {
 public:
     CBaseChainParams() {
-        const char* pszTimestamp = "097sf089v7s089f7g0s897gsf0897g0s89d7g0s897g0s98fd7g0s987f0s897g089s7g089s7089g089fd7gs098";
+        const char* pszTimestamp = " 09/08/2017 - Equifax reports breach affecting 143 million U.S. consumers. ";
         std::vector<CTxIn> vin;
         vin.resize(1);
         vin[0].scriptSig = CScript() << 0 << CBigNum(42) << std::vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -117,7 +117,9 @@ public:
         genesis.nVersion = 1;
         genesis.nTime    = GENESIS_BLOCK_TIME;
         
+        vSeeds.push_back(CDNSSeedData("dnsseed1.educoins.io", "dnsseed1.educoins.io"));
         vSeeds.push_back(CDNSSeedData("162.243.159.40", "162.243.159.40"));
+        vSeeds.push_back(CDNSSeedData("138.68.255.109", "138.68.255.109"));
     }
     virtual const CBlock& GenesisBlock() const { return genesis; }
     virtual const std::vector<CAddress>& FixedSeeds() const {
@@ -149,36 +151,11 @@ public:
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 48);        
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 1585158;
-        hashGenesisBlock = genesis.GetHash();
+        genesis.nNonce   = 544186;
+        hashGenesisBlock = genesis.GetHash(); 		
 		
-        // If genesis block hash does not match, then generate new genesis hash.
-        if (false) {
-            printf("Searching for genesis block...\n");
-            // This will figure out a valid hash and Nonce if you're
-            // creating a different genesis block:
-            uint256 hashTarget = (~uint256(0) >> 20);
-            while(true) {
-                uint256 thash = genesis.GetHash();
-                if (thash <= hashTarget)
-                break;
-                if ((genesis.nNonce & 0xFFF) == 0) {
-                    printf("nonce %08X: hash = %s (target = %s)\n", genesis.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
-                }
-                ++genesis.nNonce;
-                if (genesis.nNonce == 0) {
-                    printf("NONCE WRAPPED, incrementing time\n");
-                    ++genesis.nTime;
-                }
-            }
-            printf("genesis.nTime = %u \n", genesis.nTime);
-            printf("genesis.nNonce = %u \n", genesis.nNonce);
-            printf("genesis.GetHash = %s\n", genesis.GetHash().ToString().c_str());
-            printf("genesis.hashMerkleRoot = %s\n", genesis.hashMerkleRoot.ToString().c_str());
-        }   		
-		
-        assert(hashGenesisBlock == uint256("0x0000042bfd2649df99efa68210802bda2cb87adfcfe3e455a735537faf162d51"));
-        assert(genesis.hashMerkleRoot == uint256("0xe674863612ba57cc88d067da1f34adeaee9bd96bd2249a479847ccc2609a8970"));
+        assert(hashGenesisBlock == uint256("0x00000ef48891e770a6cee7233425927106c4f8f0c9c6f554952dffe36bef482b"));
+        assert(genesis.hashMerkleRoot == uint256("0xdad5c8844941e0526b8eb0f3262e724f0a228475d5160df9c85ed166a113c9e3"));
 		
         base58Prefixes[PUBKEY_ADDRESS]      = list_of(33).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[SCRIPT_ADDRESS]      = list_of(125).convert_to_container<std::vector<unsigned char> >();
