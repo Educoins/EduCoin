@@ -17,9 +17,9 @@
 #include "askpassphrasedialog.h"
 #include "notificator.h"
 #include "guiutil.h"
-#include "wallet.h"
-#include "util.h"
-#include "init.h"
+#include "../wallet.h"
+#include "../util.h"
+#include "../init.h"
 
 #ifdef Q_OS_MAC
 #include "macdockiconhandler.h"
@@ -27,9 +27,9 @@
 
 #include <QApplication>
 #include <QMainWindow>
-#include <QWebElementCollection>
-#include <QWebFrame>
-#include <QWebInspector>
+#include <QtWebKit/QWebElementCollection>
+#include <QtWebKitWidgets/QWebFrame>
+#include <QtWebKitWidgets/QWebInspector>
 #include <QMenuBar>
 #include <QMenu>
 #include <QVBoxLayout>

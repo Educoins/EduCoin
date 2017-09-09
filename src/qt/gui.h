@@ -6,8 +6,8 @@
 #define GUI_H
 
 #include <QMainWindow>
-#include <QWebView>
-#include <QWebElement>
+#include <QtWebKitWidgets/QWebView>
+#include <QtWebKit/QWebElement>
 #include <QSystemTrayIcon>
 #include <QLabel>
 

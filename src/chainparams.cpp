@@ -26,7 +26,7 @@ int64_t CChainParams::GetProofOfWorkReward(int nHeight, int64_t nFees) const
     int64_t nSubsidy;
 
     if(nHeight == 1) {
-        nSubsidy = 21400000 * COIN;
+        nSubsidy = 25000000 * COIN;
     } else {
         nSubsidy = 5 * COIN;
     }
@@ -151,11 +151,11 @@ public:
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 48);        
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 544186;
-        hashGenesisBlock = genesis.GetHash(); 		
+        genesis.nNonce   = 604954;
+        hashGenesisBlock = genesis.GetHash();	
 		
-        assert(hashGenesisBlock == uint256("0x00000ef48891e770a6cee7233425927106c4f8f0c9c6f554952dffe36bef482b"));
-        assert(genesis.hashMerkleRoot == uint256("0xdad5c8844941e0526b8eb0f3262e724f0a228475d5160df9c85ed166a113c9e3"));
+        assert(hashGenesisBlock == uint256("0x00000bc6f02b52898ff523aa3a79250eddcd350d919c5718d4fa523de88dc9b7"));
+        assert(genesis.hashMerkleRoot == uint256("0xcd36f110d7f2ec0421fdc6e82ab94046fc8ed3aec2b336c270955db91b922447"));
 		
         base58Prefixes[PUBKEY_ADDRESS]      = list_of(33).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[SCRIPT_ADDRESS]      = list_of(125).convert_to_container<std::vector<unsigned char> >();
@@ -241,7 +241,7 @@ public:
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
-        genesis.nTime = 1411111111;
+        genesis.nTime = 1498442475;
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
         genesis.nNonce = 0;
         hashGenesisBlock = genesis.GetHash();

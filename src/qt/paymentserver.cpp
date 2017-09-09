@@ -7,16 +7,16 @@
 #include "paymentserver.h"
 
 #include "guiconstants.h"
-#include "ui_interface.h"
-#include "util.h"
+#include "../ui_interface.h"
+#include "../util.h"
 
 #include <QByteArray>
 #include <QDataStream>
 #include <QDebug>
 #include <QFileOpenEvent>
 #include <QHash>
-#include <QLocalServer>
-#include <QLocalSocket>
+#include <QtNetwork/QLocalServer>
+#include <QtNetwork/QLocalSocket>
 #include <QStringList>
 #include <QUrl>
 
