@@ -117,9 +117,13 @@ public:
         genesis.nVersion = 1;
         genesis.nTime    = GENESIS_BLOCK_TIME;
         
+<<<<<<< HEAD
         vSeeds.push_back(CDNSSeedData("dnsseed1.educoins.io", "dnsseed1.educoins.io"));
         vSeeds.push_back(CDNSSeedData("162.243.159.40", "162.243.159.40"));
         vSeeds.push_back(CDNSSeedData("138.68.255.109", "138.68.255.109"));
+=======
+        vSeeds.push_back(CDNSSeedData("162.243.140.132", "162.243.159.040"));
+>>>>>>> 696e15440d10e7e5819e2d3d05b00f037be29948
     }
     virtual const CBlock& GenesisBlock() const { return genesis; }
     virtual const std::vector<CAddress>& FixedSeeds() const {
@@ -241,7 +245,7 @@ public:
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
-        genesis.nTime = 1411111111;
+        genesis.nTime = 1498442475;
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
         genesis.nNonce = 0;
         hashGenesisBlock = genesis.GetHash();
