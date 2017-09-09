@@ -1046,7 +1046,7 @@ boost::filesystem::path GetDefaultDataDir()
     
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "EduCoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "EduCoin2017";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
