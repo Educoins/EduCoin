@@ -1058,10 +1058,10 @@ boost::filesystem::path GetDefaultDataDir()
         // Mac
         pathRet /= "Library/Application Support";
         fs::create_directory(pathRet);
-        return pathRet / "EduCoin";
+        return pathRet / "EduCoin2017";
     #else
         // Unix
-        return pathRet / ".EduCoin";
+        return pathRet / ".EduCoin2017";
     #endif
 #endif
 

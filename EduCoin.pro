@@ -8,7 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 5) {
     DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
     CONFIG += no_include_pwd
     CONFIG += thread
-    QMAKE_CXXFLAGS = -fpermissive
+    QMAKE_CXXFLAGS = -fpermissive #-march=i686 # -fno-tree-vectorize #
 }
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -16,9 +16,9 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     QT += core gui network widgets webkitwidgets
     DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
-    CONFIG += no_include_pwd   
+    CONFIG += no_include_pwd
     CONFIG += thread
-    QMAKE_CXXFLAGS = -fpermissive
+    QMAKE_CXXFLAGS = -fpermissive -fno-tree-vectorize #-march=i686
 }
 
 # for boost 1.37, add -mt to the boost libraries
@@ -36,8 +36,24 @@ UI_DIR = build
 
 win32 {
     message(Building for Windows)
-	
+
     LIBS += $$join(PNG_LIB_PATH,,-L,)
+    INCLUDEPATH += $$PWD/../boost_1_59_0
+    INCLUDEPATH += $$PWD/../db-4.8.30.NC/build_unix
+    INCLUDEPATH += $$PWD/../miniupnpc-1.9.20150206
+    INCLUDEPATH += $$PWD/../protobuf-2.6.1
+    INCLUDEPATH += $$PWD/../openssl-1.0.1l/include
+    INCLUDEPATH += $$PWD/../qrencode-3.4.4
+
+    LIBS += -L$$PWD/../db-4.8.30.NC/build_unix
+    LIBS += -L$$PWD/../openssl-1.0.1l
+    LIBS += -L$$PWD/../protobuf-2.6.1/src/.libs
+    LIBS += -L$$PWD/../libpng-1.6.16/.libs
+    LIBS += -L$$PWD/../qrencode-3.4.4/.libs
+    LIBS += -L$$PWD/../miniupnpc-1.9.20150206/miniupnpc
+
+    LIBS += -L$$PWD/../../boost_1_59_0/stage/lib
+
 }
 
 # use: qmake "RELEASE=1"
@@ -84,6 +100,7 @@ contains(USE_UPNP, -) {
     }
     DEFINES += USE_UPNP=$$USE_UPNP STATICLIB MINIUPNP_STATICLIB
     INCLUDEPATH += $$MINIUPNPC_INCLUDE_PATH
+    LIBS += -L$$PWD/../../miniupnpc-1.9.20150206
     LIBS += $$join(MINIUPNPC_LIB_PATH,,-L,) -lminiupnpc
     win32:LIBS += -liphlpapi
 }
@@ -127,7 +144,7 @@ genleveldb.depends = FORCE
 PRE_TARGETDEPS += $$PWD/src/leveldb/libleveldb.a
 QMAKE_EXTRA_TARGETS += genleveldb
 # Gross ugly hack that depends on qmake internals, unfortunately there is no other way to do it.
-QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
+# QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) clean
 
 # regenerate src/build.h
 !windows|contains(USE_BUILD_INFO, 1) {
@@ -190,8 +207,8 @@ HEADERS += \
     src/net.h \
     src/key.h \
     src/extkey.h \
-	src/sph_keccak.h \
-	src/sph_types.h \
+        src/sph_keccak.h \
+        src/sph_types.h \
     src/eckey.h \
     src/db.h \
     src/txdb.h \
@@ -202,7 +219,7 @@ HEADERS += \
     src/txmempool.h  \
     src/state.h \
     src/bloom.h \
-	src/chainparamsseeds.h \
+        src/chainparamsseeds.h \
     src/init.h \
     src/mruset.h \
     src/rpcprotocol.h \
@@ -272,7 +289,7 @@ SOURCES += \
     src/addrman.cpp \
     src/db.cpp \
     src/walletdb.cpp \
-	src/keccak.c \
+        src/keccak.c \
     src/noui.cpp \
     src/kernel.cpp \
     src/scrypt.cpp \
@@ -330,7 +347,7 @@ SOURCES += \
     src/rpcwallet.cpp \
     src/util.cpp \
     src/wallet.cpp
-	
+
 RESOURCES += \
     educoin.qrc
 
@@ -368,7 +385,7 @@ OTHER_FILES += \
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    windows:BOOST_LIB_SUFFIX = -mt
+    windows:BOOST_LIB_SUFFIX = -mgw53-mt-s-1_59
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {
@@ -389,10 +406,12 @@ isEmpty(BDB_INCLUDE_PATH) {
 
 isEmpty(BOOST_LIB_PATH) {
     macx:BOOST_LIB_PATH = /opt/local/lib
+    win32:BOOST_LIB_PATH = C:\deps\boost_1_59_0\stage\lib
 }
 
 isEmpty(BOOST_INCLUDE_PATH) {
     macx:BOOST_INCLUDE_PATH = /opt/local/include
+    win32:BOOST_INCLUDE_PATH = C:\deps\boost_1_59_0\stage\lib
 }
 
 windows:DEFINES += WIN32
