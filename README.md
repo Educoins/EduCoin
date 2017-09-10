@@ -6,7 +6,7 @@ Under Construction.
 
 ### compilation
 
-    sudo apt install libboost-all-dev libssl-dev build-essential libdb5.3++-dev libqrencode-dev libminiupnpc-dev git
+    sudo apt install libboost-all-dev libssl-dev build-essential libdb5.3++-dev libqrencode-dev libminiupnpc-dev qt5-qmake libqt5webkit5-dev git
     git clone https://github.com/Educoins/Educoin-V-1.0.git
     cd Educoin-V-1.0
     /usr/lib/i386-linux-gnu/qt5/bin/qmake -o Makefile EduCoin.pro
