@@ -69,7 +69,7 @@ OBJS= \
     obj/extkey.o \
     obj/db.o \
     obj/init.o \
-    obj/EduCoind.o \
+    obj/educoind.o \
     obj/keystore.o \
     obj/miner.o \
     obj/main.o \
