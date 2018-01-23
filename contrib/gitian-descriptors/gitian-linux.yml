@@ -55,6 +55,6 @@ script: |
   install -s EduCoind $OUTDIR/bin/$GBUILD_BITS
   #
   cd ..
-  qmake INCLUDEPATH="$STAGING/include" LIBS="-L$STAGING/lib" BOOST_LIB_SUFFIX="-mt" RELEASE=1 USE_QRCODE=1
+  qmake INCLUDEPATH="$STAGING/include" LIBS="-L$STAGING/lib" BOOST_LIB_SUFFIX="-mt" RELEASE=1
   make $MAKEOPTS
   install EduCoin $OUTDIR/bin/$GBUILD_BITS
