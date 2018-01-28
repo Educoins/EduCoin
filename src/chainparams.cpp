@@ -150,33 +150,8 @@ public:
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 48);        
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
         genesis.nNonce   = 604954;
-        hashGenesisBlock = genesis.GetHash();	
 		
-        // If genesis block hash does not match, then generate new genesis hash.
-        if (false) {
-            printf("Searching for genesis block...\n");
-            // This will figure out a valid hash and Nonce if you're
-            // creating a different genesis block:
-            uint256 hashTarget = (~uint256(0) >> 20);
-            while(true) {
-                uint256 thash = genesis.GetHash();
-                if (thash <= hashTarget)
-                break;
-                if ((genesis.nNonce & 0xFFF) == 0) {
-                    printf("nonce %08X: hash = %s (target = %s)\n", genesis.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
-                }
-                ++genesis.nNonce;
-                if (genesis.nNonce == 0) {
-                    printf("NONCE WRAPPED, incrementing time\n");
-                    ++genesis.nTime;
-                }
-            }
-            printf("genesis.nTime = %u \n", genesis.nTime);
-            printf("genesis.nNonce = %u \n", genesis.nNonce);
-            printf("genesis.GetHash = %s\n", genesis.GetHash().ToString().c_str());
-            printf("genesis.hashMerkleRoot = %s\n", genesis.hashMerkleRoot.ToString().c_str());
-        }   		
-		
+        hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == uint256("0x00000bc6f02b52898ff523aa3a79250eddcd350d919c5718d4fa523de88dc9b7"));
         assert(genesis.hashMerkleRoot == uint256("0xcd36f110d7f2ec0421fdc6e82ab94046fc8ed3aec2b336c270955db91b922447"));
 		
