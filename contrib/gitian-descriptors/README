@@ -148,39 +148,39 @@ Mirror - http://mindstalk.net/host/boost-mingw-gas-cross-compile-2013-03-03.patc
 $ cd ..;
 $ LXC_EXECUTE=lxc-execute; PATH="$(pwd)/libexec/:$PATH";
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/boost-linux.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/boost-linux.yml
 $ mv build/out/boost-*.zip inputs/
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/deps-linux.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/deps-linux.yml
 $ mv build/out/EduCoin-deps-*.zip inputs/
    
-$ ./bin/gbuild --commit EduCoincoin=HEAD ../EduCoincoin/contrib/gitian-descriptors/gitian-linux.yml
+$ ./bin/gbuild --commit EduCoin=HEAD ../EduCoin/contrib/gitian-descriptors/gitian-linux.yml
 $ mkdir -p ../compiled/linux
 $ mv build/out/* ../compiled/linux/
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/boost-win.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/boost-win.yml
 $ mv build/out/boost-*.zip inputs/
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/deps-win.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/deps-win.yml
 $ mv build/out/EduCoin-deps-*.zip inputs/
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/qt-win.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/qt-win.yml
 $ mv build/out/qt-win*.zip inputs/
 
-$ ./bin/gbuild --commit EduCoincoin=HEAD ../EduCoincoin/contrib/gitian-descriptors/gitian-win.yml
+$ ./bin/gbuild --commit EduCoin=HEAD ../EduCoin/contrib/gitian-descriptors/gitian-win.yml
 $ mkdir -p ../compiled/win
 $ mv build/out/* ../compiled/win/
 
-$ ./bin/gbuild --commit osxcross=master,libdmg-hfsplus=master ../EduCoincoin/contrib/gitian-descriptors/osxcross.yml
+$ ./bin/gbuild --commit osxcross=master,libdmg-hfsplus=master ../EduCoin/contrib/gitian-descriptors/osxcross.yml
 $ mv build/out/osxcross.tar.xz inputs/
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/deps-osx.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/deps-osx.yml
 $ mv build/out/EduCoin-deps-osx-gitian inputs/
 
-$ ./bin/gbuild ../EduCoincoin/contrib/gitian-descriptors/qt-osx.yml
+$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/qt-osx.yml
 $ mv build/out/qt-osx*.tar.xz inputs/
 
-$ ./bin/gbuild --commit EduCoincoin=HEAD ../EduCoincoin/contrib/gitian-descriptors/gitian-osx.yml
+$ ./bin/gbuild --commit EduCoin=HEAD ../EduCoin/contrib/gitian-descriptors/gitian-osx.yml
 $ mkdir -p ../compiled/osx
 $ mv build/out/* ../compiled/osx/
 
