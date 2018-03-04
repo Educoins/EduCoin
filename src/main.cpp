@@ -1425,6 +1425,9 @@ bool CBlockThin::AcceptBlockThin()
     
     CBlockThinIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
+	
+	if (IsProofOfWork() && nHeight > Params().LastPOWBlock())
+        return DoS(100, error("AcceptBlockThin() : reject proof-of-work at height %d", nHeight));
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequiredThin(pindexPrev, IsProofOfStake()))
@@ -3542,6 +3545,9 @@ bool CBlock::AcceptBlock()
         return DoS(100, error("AcceptBlock() : reject too new nVersion = %d", nVersion));
     if (Params().IsProtocolV2(nHeight) && nVersion < 7)
         return DoS(100, error("AcceptBlock() : reject too old nVersion = %d", nVersion));
+	
+	if (IsProofOfWork() && nHeight > Params().LastPOWBlock())
+        return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
 	
     // Check coinbase timestamp
     if (GetBlockTime() > FutureDrift((int64_t)vtx[0].nTime))

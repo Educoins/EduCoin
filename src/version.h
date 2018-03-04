@@ -30,13 +30,13 @@ static const int DATABASE_VERSION = 70511;
 // network protocol versioning
 //
 
-static const int PROTOCOL_VERSION = 80016;
+static const int PROTOCOL_VERSION = 80017;
 
 // intial proto version, to be increased after version/verack negotiation
-static const int INIT_PROTO_VERSION = 80015;
+static const int INIT_PROTO_VERSION = 80016;
 
 // disconnect from peers older than this proto version
-static const int MIN_PEER_PROTO_VERSION = 80013;
+static const int MIN_PEER_PROTO_VERSION = 80016;
 
 // nTime field added to CAddress, starting with this version;
 // if possible, avoid requesting addresses nodes older than this

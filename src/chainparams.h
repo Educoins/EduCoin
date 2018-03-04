@@ -85,7 +85,7 @@ public:
     int RPCPort() const { return nRPCPort; }
     
     int BIP44ID() const { return nBIP44ID; }
-
+	int LastPOWBlock() const { return nLastPOWBlock; }
     int64_t GetProofOfWorkReward(int nHeight, int64_t nFees) const;
     int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees) const;
 
@@ -108,6 +108,7 @@ protected:
     std::string strDataDir;
     std::vector<CDNSSeedData> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
+	int nLastPOWBlock;
 };
 
 /**

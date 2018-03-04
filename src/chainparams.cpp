@@ -27,9 +27,11 @@ int64_t CChainParams::GetProofOfWorkReward(int nHeight, int64_t nFees) const
 
     if(nHeight == 1) {
         nSubsidy = 25000000 * COIN;
-    } else {
+    } else if (nHeight <= nLastPOWBlock) {
         nSubsidy = 5 * COIN;
-    }
+    } else {
+		nSubsidy = 0 * COIN;
+	}
             
     if (fDebug && GetBoolArg("-printcreation"))
         LogPrintf("GetProofOfWorkReward() : create=%s nSubsidy=%d\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
@@ -144,6 +146,7 @@ public:
         nDefaultPort = 17389;
         nRPCPort = 17388;
         nFirstPosv3Block = 1;
+		nLastPOWBlock = 475000;
         nBIP44ID = 0x80000023;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20); // "standard" scrypt target limit for proof of work, results with 0,000244140625 proof-of-work difficulty
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
@@ -196,7 +199,7 @@ public:
         nDefaultPort = 22525;
         nRPCPort = 22521;
         nBIP44ID = 0x80000001;
-        
+        nLastPOWBlock = 475000;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 16);
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 16);
