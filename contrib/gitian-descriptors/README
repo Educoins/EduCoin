@@ -122,7 +122,7 @@ The debian box will be rebooted and our setup should be complete
 ssh debian@localhost -p 22222
 
 git clone https://github.com/devrandom/gitian-builder.git
-git clone https://github.com/sp00lin9/EduCoin.git
+git clone https://github.com/EduCoins/EduCoin.git
 
 cd gitian-builder
 
@@ -148,18 +148,12 @@ Mirror - http://mindstalk.net/host/boost-mingw-gas-cross-compile-2013-03-03.patc
 $ cd ..;
 $ LXC_EXECUTE=lxc-execute; PATH="$(pwd)/libexec/:$PATH";
 
-$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/boost-linux.yml
-$ mv build/out/boost-*.zip inputs/
-
 $ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/deps-linux.yml
 $ mv build/out/EduCoin-deps-*.zip inputs/
    
 $ ./bin/gbuild --commit EduCoin=HEAD ../EduCoin/contrib/gitian-descriptors/gitian-linux.yml
 $ mkdir -p ../compiled/linux
 $ mv build/out/* ../compiled/linux/
-
-$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/boost-win.yml
-$ mv build/out/boost-*.zip inputs/
 
 $ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/deps-win.yml
 $ mv build/out/EduCoin-deps-*.zip inputs/
@@ -173,9 +167,6 @@ $ mv build/out/* ../compiled/win/
 
 $ ./bin/gbuild --commit osxcross=master,libdmg-hfsplus=master ../EduCoin/contrib/gitian-descriptors/osxcross.yml
 $ mv build/out/osxcross.tar.xz inputs/
-
-$ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/deps-osx.yml
-$ mv build/out/EduCoin-deps-osx-gitian inputs/
 
 $ ./bin/gbuild ../EduCoin/contrib/gitian-descriptors/qt-osx.yml
 $ mv build/out/qt-osx*.tar.xz inputs/
@@ -191,13 +182,6 @@ Notes:
         tail -f var/install.log
         or
         tail -f var/build.log
-
-
-
-
-
-
-
 
 Gavin's notes on getting gitian builds up and running:
 
@@ -230,4 +214,3 @@ Once you've got the right hardware and software:
     cd ../gitian-builder
     git pull
     ./bin/gbuild --commit bitcoin=HEAD ../bitcoin/contrib/gitian.yml
-
