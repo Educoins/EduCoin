@@ -5,7 +5,7 @@
         <file alias="assets/css/framework-icons.min.css">src/qt/res/assets/css/framework-icons.min.css</file>
         <file alias="assets/css/framework.min.css">src/qt/res/assets/css/framework.min.css</file>
         <file alias="assets/css/normalize.css">src/qt/res/assets/css/normalize.css</file>
-        <file alias="assets/css/shadow.min.css">src/qt/res/assets/css/shadow.min.css</file>
+        <file alias="assets/css/edu.min.css">src/qt/res/assets/css/edu.min.css</file>
         <file alias="assets/fonts/FontAwesome/FontAwesome.otf">src/qt/res/assets/fonts/FontAwesome/FontAwesome.otf</file>
         <file alias="assets/fonts/FontAwesome/fontawesome-webfont.eot">src/qt/res/assets/fonts/FontAwesome/fontawesome-webfont.eot</file>
         <file alias="assets/fonts/FontAwesome/fontawesome-webfont.svg">src/qt/res/assets/fonts/FontAwesome/fontawesome-webfont.svg</file>
@@ -106,7 +106,7 @@
         <file alias="assets/js/navigation.min.js">src/qt/res/assets/js/navigation.min.js</file>
         <file alias="assets/js/pages/send.min.js">src/qt/res/assets/js/pages/send.min.js</file>
         <file alias="assets/js/qrcode.min.js">src/qt/res/assets/js/qrcode.min.js</file>
-        <file alias="assets/js/shadow.min.js">src/qt/res/assets/js/shadow.min.js</file>
+        <file alias="assets/js/edu.min.js">src/qt/res/assets/js/edu.min.js</file>
         <file alias="assets/js/tooltip.min.js">src/qt/res/assets/js/tooltip.min.js</file>
         <file alias="assets/plugins/boostrapv3/css/bootstrap.css.map">src/qt/res/assets/plugins/boostrapv3/css/bootstrap.css.map</file>
         <file alias="assets/plugins/boostrapv3/css/bootstrap.min.css">src/qt/res/assets/plugins/boostrapv3/css/bootstrap.min.css</file>
