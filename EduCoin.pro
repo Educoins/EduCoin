@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = EduCoin
-VERSION = 1.1.0.0
+VERSION = 1.2.0.0
 
 greaterThan(QT_MAJOR_VERSION, 5) {
     INCLUDEPATH += src src/json src/qt
