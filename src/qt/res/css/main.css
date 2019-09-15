@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 input:focus {
-    outline: rgba(0, 0, 0, 0.38) 2px outset;
+    outline: rgba(255, 0, 0, 0.37) 2px outset;
     outline-offset: -2px;
 }
 
@@ -96,7 +96,7 @@ a, a:focus {
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance:none;
-    /*border-radius: none !important; background: #6C8C3C; color: #6C8C3C;*/
+    /*border-radius: none !important; background: #131218; color: red;*/
 }
 
 p {
@@ -138,7 +138,7 @@ td {
 
 tbody tr.selected {
     font-weight:700;
-    color: #403b3b;
+    color: #131218;
 }
 
 tbody tr.selected input {
@@ -150,13 +150,13 @@ tbody tr.selected input {
 tbody tr.selected:hover,
 tbody tr.selected td:hover {
     background: #ECF0F1!important;
-    color: #6C8C3C;
+    color: #131218;
     font-weight:700;
 }
 
 .pagination.selected,
 .pagination:hover {
-    background:#6c8c3c!important;
+    background:#E5203D!important;
 }
 
 /* Vertical Menu */
@@ -171,8 +171,8 @@ ul.vmenu li a {
     text-decoration: none;
     padding: 5px 0 15px 0;
     display: block;
-    color: #f1f3f3;
-    border: 1px solid #6C8C3C;
+    color: #829091;
+    border: 1px solid #15141a;
     padding-left: 20px;
     -webkit-transition: all 0.2s ease-in-out;
 }
@@ -182,22 +182,22 @@ ul.vmenu li {
 }
 
 ul.vmenu li.selected a {
-    background: #567030;
-    border: 1px solid #445926;
+    background: #0f0f13;
+    border: 1px solid #101014;
     color: #fff;
 }
 
 ul.vmenu li a:hover {
-    background: #567030;
-    border: 1px solid #445926;
+    background: #424242;
+    border: 1px solid #1b1a20;
     color: #fff;
 }
 
 /* Horizontal Menu */
 div.menu {
     text-align: center;
-    padding-top: 15px;
-    padding-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 div.menu span {
@@ -208,7 +208,7 @@ div.menu span {
 div.menu span a {
     display: block;
     text-decoration: none;
-    color: #FFF;
+    color: #829091;
     text-transform: uppercase;
     font-size: 12px;
 }
@@ -232,7 +232,7 @@ Add transition to containers so they can push in and out.
 }
 
 #navpanel {
-    background: #6C8C3C;
+    background: #131218;
     margin-left: -135px;
     width: 17%;
     position: fixed;
@@ -346,7 +346,7 @@ article {
     border-width: 1px 0 0 0;
     background: #ecf0f1;
     overflow:auto;
-    box-EduCoin:0 -1px 0 0 #dee2e2,
+    box-shadow:0 -1px 0 0 #dee2e2,
                0 -2px 0 0 #f8f8f8;
 }
 
@@ -369,7 +369,7 @@ article {
     background: inherit;
     padding: 10px;
     cursor: pointer;
-    box-EduCoin: -1px -1px 0 0 #dee2e2, -1px 1px 0 0 #dee2e2, -2px -2px 0 0 #f8f8f8, -2px 2px 0 0 #f8f8f8;
+    box-shadow: -1px -1px 0 0 #dee2e2, -1px 1px 0 0 #dee2e2, -2px -2px 0 0 #f8f8f8, -2px 2px 0 0 #f8f8f8;
     z-index: 10000;
 }
 
@@ -506,7 +506,7 @@ article {
 }
 
 .content .flex-item + .flex-item {
-    border-top: 1px solid #6C8C3C;
+    border-top: 1px solid #131218;
 }
 
 
@@ -520,7 +520,7 @@ article {
 #layout.active #navpanel {
     left: 135px;
     width: 40%;
-    border: 1px solid #6C8C3C;
+    border: 1px solid #131218;
 }
 
 
@@ -545,7 +545,7 @@ article {
 
 #clientinfo {
     width: 90%;
-    color: #FFFFFF;
+    color: #464547;
     font-size:0.6em;
     position:relative;
     bottom:10px;
@@ -566,19 +566,19 @@ article {
 }
 
     progress::-webkit-progress-bar {
-            background: #567030;
-            border-radius: 30px;
+            background: #131218;
+            border-radius: 50px;
             padding: 2px;
-            box-EduCoin: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
+            box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
     }
 
     progress::-webkit-progress-value {
             border-radius: 50px;
-            box-EduCoin: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
             background:
                     -webkit-linear-gradient(45deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
-                    -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.2)),
-                    -webkit-linear-gradient(left, #ddd, #fff);
+                    -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.2)),
+                    -webkit-linear-gradient(left, #e5203d, #e41c39);
 
             /* Looks great, now animating it */
             background-size: 25px 14px, 100% 100%, 100% 100%;
@@ -596,9 +596,8 @@ article {
 #navpanel [href='#transactions']:before,
 #navpanel [href='#addressbook']:before,
 #navpanel [href='#messages']:before,
+#navpanel [href='#chaindata']:before,
 #navpanel [href='#blockdata']:before,
-#navpanel [href='#torrent']:before,
-#navpanel [href='#bittrex']:before,
 #navpanel [href='#news']:before {
     height: 20px;
     width: 20px;
@@ -607,7 +606,7 @@ article {
     content: " ";
     padding-left: 18px;
     top: 5px;
-    background: #FFFFFF;
+    background: #829091;
     -webkit-mask-image: url('qrc:///icons/nav_icons');
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position-x: -5px;
@@ -619,11 +618,10 @@ article {
 #navpanel .selected [href='#transactions']:before,
 #navpanel .selected [href='#addressbook']:before,
 #navpanel .selected [href='#messages']:before,
+#navpanel .selected [href='#chaindata']:before,
 #navpanel .selected [href='#blockdata']:before,
-#navpanel .selected [href='#torrent']:before,
-#navpanel .selected [href='#bittrex']:before,
 #navpanel .selected [href='#news']:before {
-    background: #FFF;
+    background: #e5203d;
 }
 
 #navpanel [href='#overview']:before {
@@ -650,16 +648,12 @@ article {
     -webkit-mask-position-y: -231px;
 }
 
-#navpanel [href='#blockdata']:before {
-    -webkit-mask-position-y: -319px;
-}
-
-#navpanel [href='#torrent']:before {
+#navpanel [href='#chaindata']:before {
     -webkit-mask-position-y: -274px;
 }
 
-#navpanel [href='#bittrex']:before {
-    -webkit-mask-position-y: -185px;
+#navpanel [href='#blockdata']:before {
+    -webkit-mask-position-y: -319px;
 }
 
 #navpanel [href='#news']:before {
@@ -686,7 +680,7 @@ small screens.
     display: block; /* show this only on small screens */
     top: 0;
     left: 0; /* "#menu width" */
-    background: #6C8C3C;
+    background: #131218;
     background: rgba(0,0,0,0.7);
     font-size: 10px; /* change this value to increase/decrease button size */
     z-index: 10;
@@ -697,7 +691,7 @@ small screens.
 
     #navlink:hover,
     #navlink:focus {
-        background: #6C8C3C;
+        background: #131218;
     }
 
     #navlink span {
@@ -728,7 +722,7 @@ small screens.
 {    font-size:0.7em;
     text-align: center;
     color: #fff;
-    background: #6c8c3c;
+    background: #131218;
     position: absolute;
     z-index: 99999999;
     padding: 10px;
@@ -741,7 +735,7 @@ small screens.
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #6C8C3C;
+    border-top: 10px solid #131218;
     content: '';
     position: absolute;
     left: 50%;
@@ -752,7 +746,7 @@ small screens.
 #tooltip.top:after
 {
     border-top-color: transparent;
-    border-bottom: 10px solid #6C8C3C;
+    border-bottom: 10px solid #131218;
     top: -20px;
     bottom: auto;
 }
@@ -773,6 +767,10 @@ small screens.
 
 .footable {
     table-layout: fixed;
+}
+
+#chaindata .footable {
+    table-layout: initial;
 }
 
 .footable > thead > tr > th > span.footable-sort-indicator:before {
@@ -804,15 +802,15 @@ small screens.
     -moz-osx-font-smoothing: grayscale;
 }
 
-.footable.EduCoin {
-    border-color: #6C8C3C;
+.footable.shadow {
+    border-color: #e5203d;
 }
-.footable.EduCoin > tfoot > tr > th,
-.footable.EduCoin > thead > tr > th,
-.footable.EduCoin > tfoot > tr > td,
-.footable.EduCoin > thead > tr > td {
-    background-color: rgba(73, 49, 50, 0.45);
-    border-color: #6C8C3C;
+.footable.shadow > tfoot > tr > th,
+.footable.shadow > thead > tr > th,
+.footable.shadow > tfoot > tr > td,
+.footable.shadow > thead > tr > td {
+    background-color: #e5203d;
+    border-color: #e5203d;
 }
 
 .footable > thead > tr > th,.footable > thead > tr > td {
@@ -950,13 +948,13 @@ color: rgb(228, 26, 26);
     cursor: pointer;
     -webkit-transition: font-size 0.6s, color 0.6s, -webkit-transform 0.6s;
     transition: font-size 0.6s, color 0.6s, transform 0.6s;
-    color: #6C8C3C;
+    color:#131218;
 }
 
 #overview .wallet.expanded i {
     font-size: 16px !important;
     cursor: pointer;
-    color: #6C8C3C;
+    color: #131218;
     float: left;
 }
 
@@ -1019,7 +1017,7 @@ color: rgb(228, 26, 26);
 }
 
 .total-balance .staking {
-    color: #6C8C3C;
+    color: #131218;
     font-size: 0.7em;
     display: block;
     margin-top: 10px;
@@ -1036,7 +1034,7 @@ color: rgb(228, 26, 26);
 .total-balance .staking .cents {
     font-size: 16px;
     font-family: "Open Sans", sans-serif;
-    color: #6C8C3C;
+    color: #131218;
     margin-left: -3px;
 }
 
@@ -1062,7 +1060,7 @@ color: rgb(228, 26, 26);
 .transaction-overview span {
     font-size: 1.1em;
     font-weight:400;
-    color: #6C8C3C;
+    color: #131218;
     font-family: "Open Sans", sans-serif;
 }
 
@@ -1074,20 +1072,43 @@ color: rgb(228, 26, 26);
 }
 
 #overview .overview_date {
-    background: #b9bdbe;
-    margin-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    color: white;
-    float: right;
-    font-size: 0.7em;
+    background:#b9bdbe;
+    margin-left:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-right:10px;
+    padding-left:10px;
+    color:white;
+    float:right;
+    font-size:0.7em;
     -webkit-border-radius: 3;
     -moz-border-radius: 3;
     border-radius: 3px;
     letter-spacing: 1px;
 }
+
+#announcements h4 {
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    line-height:1.5em;
+}
+
+#announcements h4 a {
+    color: #313131;
+    text-decoration: none;
+}
+
+
+#announcements span {
+    color: #9e9f9f;
+    padding-bottom: 10px;
+    text-decoration: none;
+    font-size: 0.6em;
+}
+
+
 
 /****************************
 
@@ -1220,6 +1241,7 @@ label.recipient {
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+
 }
 
 .button:hover,
@@ -1230,8 +1252,8 @@ label.recipient {
 
 .button:active,
 .button.is-active {
-  -webkit-box-EduCoin: none;
-  box-EduCoin: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
   text-decoration: none;
 }
 
@@ -1352,20 +1374,21 @@ label.recipient {
 }
 
 .button.is-inverse {
-  background: #6C8C3C;
+  background: #E51C39;
+
   color: white;
 }
 
 .button.is-inverse:hover,
 .button.is-inverse:focus {
-  background: #567030;
+  background: #8A1B2B;
 
   text-decoration: none;
 }
 
 .button.is-inverse:active,
 .button.is-inverse.is-active {
-  background-color: #567030;
+  background-color: #8A1B2B;
 }
 
 .button.is-link {
@@ -1461,7 +1484,7 @@ label.recipient {
 
 /****************************
 
-       CHAT
+       ShadowChat
 
 *****************************/
 
@@ -1711,9 +1734,9 @@ label.recipient {
     padding: 10px;
     border-radius: 5px;
     margin-left: 10px;
-    -webkit-box-EduCoin:  1px 1px 5px rgba(0,0,0,.15);
-    -moz-box-EduCoin:  1px 1px 5px rgba(0,0,0,.15);
-    box-EduCoin: 1px 1px 5px rgba(0,0,0,.15);
+    -webkit-box-shadow:  1px 1px 5px rgba(0,0,0,.15);
+    -moz-box-shadow:  1px 1px 5px rgba(0,0,0,.15);
+    box-shadow: 1px 1px 5px rgba(0,0,0,.15);
     font-size: 15px;
     max-width: 75%;
     overflow-wrap: break-word;
@@ -1754,7 +1777,7 @@ label.recipient {
 }
 
 .text-box textarea:focus {
-    outline: rgba(173, 228, 255, 1) 2px outset;
+    outline: rgba(255, 0, 0, 0.37) 2px outset;
     outline-offset: -2px;
 }
 
@@ -1775,7 +1798,7 @@ label.recipient {
     text-align: center;
     display: block;
     color: #fff;
-    background: #567030;
+    background: #E41C39;
     -webkit-border-radius: 5;
     -moz-border-radius: 5;
     border-radius: 5px;
@@ -1786,25 +1809,25 @@ label.recipient {
 
 .left-bar :hover,
 .left-bar :focus {
-  background: #567030;
+  background: #8A1B2B;
   text-decoration: none;
 }
 
 .left-bar :active,
 .left-bar .is-active {
   border-color: #353b43;
-  background-color: #567030;
+  background-color: #8A1B2B;
 }
 
 .right-bar :hover,
 .right-bar :focus {
-  background: #567030;
+  background: #8A1B2B;
   text-decoration: none;
 }
 
 .right-bar :active,
 .right-bar .is-active {
-    background-color: #567030;
+    background-color: #8A1B2B;
 }
 
 .text-box .left-bar a {
@@ -1843,13 +1866,13 @@ label.recipient {
     margin-left: 5px;
 }
 .text-box .right-bar a.submit:hover i {
-    background: #567030;
+    background: #8A1B2B;
     text-decoration: none;
 }
 
 
 /*********************
-    END CHAT
+    END SHADOWCHAT
 *********************/
 
 /* Scrollbar */
@@ -1873,10 +1896,10 @@ label.recipient {
 /* Icons styling */
 
 .staking {
-    color: #6c8c3c;
+    color: rgb(18, 121, 59);
 }
 .not-staking {
-    color: #D62C2C;
+    opacity: 0.3;
 }
 
 
@@ -1896,11 +1919,7 @@ label.recipient {
 
 .inputError {
     color: white !important;
-    background: #6C8C3C !important;
-}
-
-.vred {
-    color: rgba(73, 49, 50, 0.7);
+    background: #E51C39 !important;
 }
 
 .red {
@@ -1909,10 +1928,6 @@ label.recipient {
 
 .orange {
     color: #ff8800;
-}
-
-.lightgrey {
-    color: #c8cac9;
 }
 
 .yellow {
@@ -1937,10 +1952,6 @@ label.recipient {
 
 .grey {
     color: #C0C0C0;
-}
-
-.edugreen {
-	color: #6c8c3c
 }
 
 .height10percent {
@@ -2027,9 +2038,9 @@ label.recipient {
     overflow:hidden;
 }
 /*
-Hides the menu at `60em`, but modify this based on your app's needs.
+Hides the menu at `56.625em`, but modify this based on your app's needs.
 */
-@media (min-width: 60em) {
+@media (min-width: 56.625em) {
     /*
     article {
         position: absolute;
@@ -2060,6 +2071,11 @@ Hides the menu at `60em`, but modify this based on your app's needs.
         position: fixed;
         left: 135px;
         display: none;
+    }
+
+    #announcements {
+         height: 100%;
+
     }
 
     #recenttxns {
@@ -2175,7 +2191,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     .text-box {
         left: 47%;
     }
-} /* @media (min-width: 60em) */
+} /* @media (min-width: 56.625em) */
 
 
 
@@ -2198,7 +2214,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     width: 800px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
 }
 
@@ -2208,7 +2224,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     width: 800px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
 }
 
@@ -2218,7 +2234,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     width: 750px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
     position: absolute;
 }
@@ -2246,7 +2262,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     width: 800px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
     position: absolute;
 }
@@ -2284,7 +2300,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     width: 400px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
 }
 
@@ -2305,7 +2321,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     height: 480px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
     overflow: auto;
 }
@@ -2317,7 +2333,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     height: 480px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
     overflow: auto;
 }
@@ -2330,7 +2346,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     height: 480px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
     overflow: auto;
 }
@@ -2342,7 +2358,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     height: 320px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
     overflow: auto;
 }
@@ -2357,7 +2373,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     width: 630px;
     background: #fff;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-    box-EduCoin: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-EduCoin: 0 0 4px rgba(0,0,0,0.7); -moz-box-EduCoin: 0 0px 4px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
     display: none;
 }
 
@@ -2382,7 +2398,7 @@ Hides the menu at `60em`, but modify this based on your app's needs.
     font-size:0.8em;
     color: #F51E3E;
     background: #ecf0f1;
-    box-EduCoin: -1px -1px 0 0 #FFFFFF, -1px 1px 0 0 #FFFFFF, -2px -2px 0 0 #FFFFFF, -2px 2px 0 0 #FFFFFF;
+    box-shadow: -1px -1px 0 0 #dee2e2, -1px 1px 0 0 #dee2e2, -2px -2px 0 0 #f8f8f8, -2px 2px 0 0 #f8f8f8;
 }
 
 .network-alerts-icon {
@@ -2443,11 +2459,11 @@ input[type=checkbox] + label {
 }
 
 input[type=checkbox]:checked {
-    border: 2px solid #3c3c3c;;
+    border: 2px solid #F51E3E;;
 }
 
 input[type=checkbox]:checked + label {
-    color: #3c3c3c;
+    color: #F51E3E;
 }
 
 input[disabled] {
@@ -2608,10 +2624,10 @@ input[type=checkbox]:checked + label:before {
     left: 50%;  
 }
 
-.blue-circle {
+.red-circle {
     width: 20px;
     height: 20px;
-    background-color: #347fda;
+    background-color: #F51E3E;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;   

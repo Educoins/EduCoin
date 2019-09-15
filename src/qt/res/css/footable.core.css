@@ -30,7 +30,7 @@
   cursor: pointer;
 }
 .footable.breakpoint > tbody > tr > td.footable-cell-detail {
-  background: #fff;
+  background: #eee;
   border-top: none;
 }
 .footable.breakpoint > tbody > tr > td > span.footable-toggle {
@@ -44,7 +44,7 @@
   -webkit-font-smoothing: antialiased;
   padding-right: 5px;
   font-size: 14px;
-  color: #FFF;
+  color: #888888;
 }
 .footable.breakpoint > tbody > tr > td > span.footable-toggle:before {
   content: "\e000";
