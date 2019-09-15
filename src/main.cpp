@@ -4282,7 +4282,7 @@ struct CImportingNow
 
 void ThreadImport(std::vector<boost::filesystem::path> vImportFiles)
 {
-    RenameThread("shadow-loadblk");
+    RenameThread("educoin-loadblk");
     CImportingNow imp;
 
     // -loadblock=

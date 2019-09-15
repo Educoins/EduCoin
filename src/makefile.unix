@@ -208,7 +208,7 @@ obj-test/%.o: test/%.cpp
 		-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	rm -f $(@:%.o=%.d)
 
-test_shadow: $(TESTOBJS) $(filter-out obj/init.o obj/shadowcoind.o,$(OBJS:obj/%=obj/%))
+test_educoin: $(TESTOBJS) $(filter-out obj/init.o obj/educoind.o,$(OBJS:obj/%=obj/%))
 	$(LINK) $(xCXXFLAGS) -o $@ $(LIBPATHS) $^ $(TESTLIBS) $(xLDFLAGS) $(LIBS)
 
 clean:
