@@ -103,6 +103,7 @@ OBJS= \
     obj/db.o \
     obj/init.o \
     obj/keystore.o \
+	 obj/keccak.o \
     obj/main.o \
     obj/miner.o \
     obj/net.o \

@@ -207,8 +207,8 @@ HEADERS += \
     src/net.h \
     src/key.h \
     src/extkey.h \
-        src/sph_keccak.h \
-        src/sph_types.h \
+    src/sph_keccak.h \
+    src/sph_types.h \
     src/eckey.h \
     src/db.h \
     src/txdb.h \
@@ -219,7 +219,7 @@ HEADERS += \
     src/txmempool.h  \
     src/state.h \
     src/bloom.h \
-        src/chainparamsseeds.h \
+    src/chainparamsseeds.h \
     src/init.h \
     src/mruset.h \
     src/rpcprotocol.h \
@@ -289,7 +289,7 @@ SOURCES += \
     src/addrman.cpp \
     src/db.cpp \
     src/walletdb.cpp \
-        src/keccak.c \
+    src/keccak.c \
     src/noui.cpp \
     src/kernel.cpp \
     src/scrypt.cpp \
