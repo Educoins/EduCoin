@@ -1,6 +1,6 @@
 ---
 name: "EduCoin"
-enable_cache: true
+
 suites:
 - "trusty"
 architectures:
