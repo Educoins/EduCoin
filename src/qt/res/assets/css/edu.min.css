@@ -1013,7 +1013,8 @@ progress::-webkit-progress-value {
 
 .no-syncing {
     background: url(qrc:///assets/icons/synced.png);
-    width: 26px
+    height:16px;
+	width: 16px
 }
 
 .syncing-spinner {
@@ -1023,8 +1024,9 @@ progress::-webkit-progress-value {
 
 .chat-icon {
     background: url(qrc:///assets/icons/chat_bubble.png);
-    width: 16px;
-	height:16px
+    height:16px;
+	width: 16px
+	
 }
 
 .heading-selected {
