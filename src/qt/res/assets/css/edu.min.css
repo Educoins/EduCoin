@@ -1023,7 +1023,8 @@ progress::-webkit-progress-value {
 
 .chat-icon {
     background: url(qrc:///assets/icons/chat_bubble.png);
-    width: 26px
+    width: 24px;
+	height:24px
 }
 
 .heading-selected {
