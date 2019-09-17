@@ -1022,7 +1022,7 @@ progress::-webkit-progress-value {
 .no-syncing {
     background: url(qrc:///assets/icons/synced.png);
     width: 24px;
-	height: 16px
+	height: 24px
 }
 
 .syncing-spinner {
