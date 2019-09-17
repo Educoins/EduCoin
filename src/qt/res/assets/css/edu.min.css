@@ -932,14 +932,14 @@ progress::-webkit-progress-value {
 
 .staking {
     background: url(qrc:///assets/icons/staking.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .not-staking {
     background: url(qrc:///assets/icons/staking_off.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .encryption {
@@ -979,44 +979,44 @@ progress::-webkit-progress-value {
 
 .connect-0 {
     background: url(qrc:///assets/icons/connect_0.png);
-    height: 24px;
+    height: 16px;
     width: 24px
 }
 
 .connect-1 {
     background: url(qrc:///assets/icons/connect_1.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .connect-2 {
     background: url(qrc:///assets/icons/connect_2.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .connect-3 {
     background: url(qrc:///assets/icons/connect_3.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .connect-4 {
     background: url(qrc:///assets/icons/connect_4.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .connect-5 {
     background: url(qrc:///assets/icons/connect_5.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .connect-6 {
     background: url(qrc:///assets/icons/connect_6.png);
-    height: 24px;
-    width: 16px
+    height: 16px;
+    width: 24px
 }
 
 .no-syncing {
