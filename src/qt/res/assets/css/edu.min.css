@@ -97,13 +97,13 @@ td {
     border-radius: 0 !important
 }
 
-.edu-container {
+.iframe-container {
   overflow: hidden;
   padding-top: 56.25%;
   position: relative;
 }
  
-.edu-container iframe {
+.iframe-container iframe {
    border: 0;
    height: 100%;
    left: 0;
@@ -113,7 +113,7 @@ td {
 }
  
 /* 4x3 Aspect Ratio */
-.edu-container-4x3 {
+.iframe-container-4x3 {
   padding-top: 75%;
 }
 
@@ -932,12 +932,14 @@ progress::-webkit-progress-value {
 
 .staking {
     background: url(qrc:///assets/icons/staking.png);
-    width: 26px
+    width: 48px;
+	height: 24px
 }
 
 .not-staking {
     background: url(qrc:///assets/icons/staking_off.png);
-    width: 26px
+    width: 48px;
+	height: 24px
 }
 
 .encryption {
@@ -977,38 +979,44 @@ progress::-webkit-progress-value {
 
 .connect-0 {
     background: url(qrc:///assets/icons/connect_0.png);
-    height: 16px;
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .connect-1 {
     background: url(qrc:///assets/icons/connect_1.png);
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .connect-2 {
     background: url(qrc:///assets/icons/connect_2.png);
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .connect-3 {
     background: url(qrc:///assets/icons/connect_3.png);
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .connect-4 {
     background: url(qrc:///assets/icons/connect_4.png);
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .connect-5 {
     background: url(qrc:///assets/icons/connect_5.png);
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .connect-6 {
     background: url(qrc:///assets/icons/connect_6.png);
-    width: 26px
+    height: 24px;
+    width: 24px
 }
 
 .no-syncing {
