@@ -1,36 +1,21 @@
 ---
 name: "EduCoin"
-<<<<<<< Updated upstream
-=======
 enable_cache: true
 distro: "ubuntu"
->>>>>>> Stashed changes
 suites:
 - "bionic"
 architectures:
 - "amd64"
 packages:
-<<<<<<< Updated upstream
-- "mingw-w64"
-- "g++-mingw-w64"
-- "git-core"
-- "nsis"
-- "faketime"
-- "autoconf2.13"
-=======
 - "curl"
 - "g++"
 - "git"
 - "pkg-config"
 - "autoconf"
->>>>>>> Stashed changes
 - "libtool"
 - "automake"
-- "pkg-config"
+- "faketime"
 - "bsdmainutils"
-<<<<<<< Updated upstream
-reference_datetime: "2013-06-01 00:00:00"
-=======
 - "mingw-w64"
 - "g++-mingw-w64"
 - "nsis"
@@ -38,59 +23,11 @@ reference_datetime: "2013-06-01 00:00:00"
 - "ca-certificates"
 - "python3"
 - "rename"
->>>>>>> Stashed changes
 remotes:
 - "url": "https://github.com/Educoins/EduCoin.git"
   "dir": "EduCoin"
-files:
-- "qt-win32-5.5.0-gitian.tar.xz"
-- "qt-win64-5.5.0-gitian.tar.xz"
-- "EduCoin-deps-win32-gitian.tar.xz"
-- "EduCoin-deps-win64-gitian.tar.xz"
+files: []
 script: |
-<<<<<<< Updated upstream
-  # Defines
-  export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1
-  export FAKETIME=$REFERENCE_DATETIME
-  export TZ=UTC
-  INDIR=$HOME/build
-  OPTFLAGS='-O2'
-  TEMPDIR="$HOME/tempdir"
-  
-  NEEDDIST=1
-  # Qt: workaround for determinism in resource ordering
-  #  Qt5's rcc uses a QHash to store the files for the resource.
-  #  A security fix in QHash makes the ordering of keys to be different on every run
-  #  (https://qt.gitorious.org/qt/qtbase/commit/c01eaa438200edc9a3bbcd8ae1e8ded058bea268).
-  #  This is good in general but qrc shouldn't be doing a traversal over a randomized container.
-  #  The thorough solution would be to use QMap instead of QHash, but this requires patching Qt.
-  #  For now luckily there is a test mode that forces a fixed seed.
-  export QT_RCC_TEST=1
-  for BITS in 32 64; do # for architectures
-    #
-    STAGING=$HOME/staging${BITS}
-    BUILDDIR=$HOME/build${BITS}
-    BINDIR=$OUTDIR/$BITS
-    DEPSDIR=$HOME/deps${BITS}
-    if [ "$BITS" == "32" ]; then
-      HOST=i686-w64-mingw32
-      DISTNAME=i686-win
-    else
-      HOST=x86_64-w64-mingw32
-      DISTNAME=x86_64-win
-    fi
-    export PATH=$STAGING/host/bin:$PATH
-    rm -rf $DEPSDIR
-    rm -rf $BUILDDIR
-    rm -rf $STAGING
-    mkdir -p $STAGING $BUILDDIR $BINDIR $DEPSDIR
-    #
-    cd $STAGING
-    #mkdir qt
-    #cd qt
-    #5edf8d14e47eb6438d3b5a20ed577343a07512eb220e6f83cbb3fbd33112a776  qt-win32-5.5.0-gitian-r3.zip
-    #75a3b425f08969983b2faf0af83b01fd753f99a15ced0b6f998d4db0a1c077f3  qt-win64-5.5.0-gitian-r3.zip
-=======
   set -e -o pipefail
 
   WRAP_DIR=$HOME/wrapped
@@ -168,43 +105,34 @@ script: |
   create_per-host_faketime_wrappers "2000-01-01 12:00:00"
   create_per-host_linker_wrapper "2000-01-01 12:00:00"
   export PATH=${WRAP_DIR}:${PATH}
->>>>>>> Stashed changes
 
-    tar xf $INDIR/qt-win${BITS}-5.5.0-gitian.tar.xz
-    cd $DEPSDIR
-    tar xf $INDIR/EduCoin-deps-win${BITS}-gitian.tar.xz
-    #
-    cd $BUILDDIR
-    cp -r ../build/EduCoin .
-    cd EduCoin
-    mkdir -p $OUTDIR/src
-    git archive HEAD | tar -x -C $OUTDIR/src
-    cp $OUTDIR/src/doc/README_windows.txt $OUTDIR/readme.txt
-    cp $OUTDIR/src/COPYING $OUTDIR/COPYING.txt
-    #
-    cd src
-    make -f makefile.linux-mingw HOST="$HOST" DEPSDIR="$DEPSDIR" CURDIR="$BUILDDIR/EduCoin/src" STATIC=1 $MAKEOPTS USE_UPNP=1 BOOST_LIB_SUFFIX="-mt-s" DEBUGFLAGS= 
-    cp EduCoind.exe $BINDIR/
-    cd ..
-    #
-    #$DEPSDIR/qt/host/bin/qmake -spec unsupported/win32-g++-cross MINIUPNPC_LIB_PATH=$HOME/build/miniupnpc MINIUPNPC_INCLUDE_PATH=$HOME/build/ BDB_LIB_PATH=$HOME/build/db-4.8.30.NC/build_unix BDB_INCLUDE_PATH=$HOME/build/db-4.8.30.NC/build_unix BOOST_LIB_PATH=$HOME/build/lib BOOST_INCLUDE_PATH=$HOME/build/include BOOST_LIB_SUFFIX=-mt-s BOOST_THREAD_LIB_SUFFIX=_win32-mt-s OPENSSL_LIB_PATH=$HOME/build/openssl-1.0.1h OPENSSL_INCLUDE_PATH=$HOME/build/openssl-1.0.1h/include INCLUDEPATH=$HOME/build DEFINES=BOOST_THREAD_USE_LIB BITCOIN_NEED_QT_PLUGINS=1 QMAKE_LRELEASE=lrelease QMAKE_CXXFLAGS=-frandom-seed=bitcoin USE_BUILD_INFO=1
-    $STAGING/host/bin/qmake -xplatform win32-g++ RELEASE=1 QMAKE_LRELEASE="$STAGING/host/bin/lrelease" MINIUPNPC_LIB_PATH="$DEPSDIR/lib" MINIUPNPC_INCLUDE_PATH="$DEPSDIR/include" BDB_LIB_PATH="$DEPSDIR/lib" BDB_INCLUDE_PATH="$DEPSDIR/include" BOOST_LIB_PATH="$DEPSDIR/lib" BOOST_INCLUDE_PATH="$DEPSDIR/include" BOOST_LIB_SUFFIX="-mt-s" BOOST_THREAD_LIB_SUFFIX="_win32-mt-s" OPENSSL_LIB_PATH="$DEPSDIR/lib" OPENSSL_INCLUDE_PATH="$DEPSDIR/include" INCLUDEPATH="$DEPSDIR/include" DEFINES=BOOST_THREAD_USE_LIB BITCOIN_NEED_QT_PLUGINS=1 QMAKE_CXXFLAGS=-frandom-seed=EduCoin USE_BUILD_INFO=1
-    make $MAKEOPTS
-    cp release/EduCoin.exe $BINDIR/
-    #
-    unset LD_PRELOAD
-    unset FAKETIME
-  done # for BITS in
-  #
-  # sort distribution tar file and normalize user/group/mtime information for deterministic output
+  cd EduCoin
+  BASEPREFIX=`pwd`/depends
+  # Build dependencies for each host
+  for i in $HOSTS; do
+    make ${MAKEOPTS} -C ${BASEPREFIX} HOST="${i}"
+  done
+
+  # Faketime for binaries
+  export PATH=${PATH_orig}
+  create_global_faketime_wrappers "${REFERENCE_DATETIME}"
+  create_per-host_faketime_wrappers "${REFERENCE_DATETIME}"
+  create_per-host_linker_wrapper "${REFERENCE_DATETIME}"
+  export PATH=${WRAP_DIR}:${PATH}
+
+  # Create the release tarball using (arbitrarily) the first host
+  ./autogen.sh
+  CONFIG_SITE=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`/share/config.site ./configure --prefix=/
+  make dist
+  SOURCEDIST=`echo EduCoin-*.tar.gz`
+  DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
+
+  # Correct tar file order
+  mkdir -p temp
+  pushd temp
+  tar xf ../$SOURCEDIST
+  find EduCoin-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   mkdir -p $OUTDIR/src
-<<<<<<< Updated upstream
-  rm -rf $TEMPDIR
-  mkdir -p $TEMPDIR
-  cd $TEMPDIR
-  cd $BINDIR
-  #tar -xvf $HOME/build/EduCoin/$DISTNAME | sort | tar --no-recursion -cT /dev/stdin --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 --mtime="$REFERENCE_DATETIME" | gzip -n > $OUTDIR/src/$DISTNAME
-=======
   cp ../$SOURCEDIST $OUTDIR/src
   popd
 
@@ -254,4 +182,3 @@ script: |
   mv ${OUTDIR}/${DISTNAME}-i686-*-debug.zip ${OUTDIR}/${DISTNAME}-win32-debug.zip
   mv ${OUTDIR}/${DISTNAME}-x86_64-*.zip ${OUTDIR}/${DISTNAME}-win64.zip
   mv ${OUTDIR}/${DISTNAME}-i686-*.zip ${OUTDIR}/${DISTNAME}-win32.zip
->>>>>>> Stashed changes

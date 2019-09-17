@@ -1,24 +1,11 @@
 ---
 name: "EduCoin"
-<<<<<<< Updated upstream
-=======
 enable_cache: true
 distro: "ubuntu"
->>>>>>> Stashed changes
 suites:
 - "bionic"
 architectures:
-- "i386"
 - "amd64"
-<<<<<<< Updated upstream
-packages: 
-- "g++"
-- "libqt5webkit5-dev"
-- "qt5-qmake"
-- "qt5-default"
-- "qttools5-dev-tools"
-- "git-core"
-=======
 packages:
 - "curl"
 - "g++-aarch64-linux-gnu"
@@ -37,60 +24,19 @@ packages:
 - "gcc-8-multilib"
 - "binutils-gold"
 - "git"
->>>>>>> Stashed changes
 - "pkg-config"
+- "autoconf"
 - "libtool"
 - "automake"
 - "faketime"
 - "bsdmainutils"
-<<<<<<< Updated upstream
-reference_datetime: "2015-05-25 00:00:00"
-=======
 - "ca-certificates"
 - "python3"
->>>>>>> Stashed changes
 remotes:
 - "url": "https://github.com/Educoins/EduCoin.git"
   "dir": "EduCoin"
-files:
-- "EduCoin-deps-linux32-gitian.tar.xz"
-- "EduCoin-deps-linux64-gitian.tar.xz"
+files: []
 script: |
-<<<<<<< Updated upstream
-  STAGING="$HOME/install"
-  OPTFLAGS='-O2'
-  BINDIR="${OUTDIR}/bin/${GBUILD_BITS}" # 32/64 bit build specific output directory
-  TEMPDIR="$HOME/tempdir"
-  if [ "$GBUILD_BITS" == "32" ]; then
-    export LD_PRELOAD=/usr/lib/i386-linux-gnu/faketime/libfaketime.so.1;
-  else
-    export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1;
-  fi
-  export FAKETIME=$REFERENCE_DATETIME
-  export TZ=UTC
-  export LIBRARY_PATH="$STAGING/lib"
-  mkdir -p ${BINDIR}
-  #
-  mkdir -p $STAGING
-  cd $STAGING
-  tar xf ../build/EduCoin-deps-linux${GBUILD_BITS}-gitian.tar.xz
-  cd ../build
-  #
-  cd EduCoin
-  mkdir -p $OUTDIR/src
-  git archive HEAD | tar -x -C $OUTDIR/src
-  cp $OUTDIR/src/doc/README $OUTDIR
-  cp $OUTDIR/src/COPYING $OUTDIR
-  cd src
-  make -f makefile.unix STATIC=1 OPENSSL_INCLUDE_PATH="$STAGING/include" OPENSSL_LIB_PATH="$STAGING/lib" $MAKEOPTS EduCoind USE_UPNP=1 BOOST_LIB_SUFFIX="-mt" DEBUGFLAGS= 
-  mkdir -p $STAGING/bin/$GBUILD_BITS
-  install -s EduCoind $OUTDIR/bin/$GBUILD_BITS
-  #
-  cd ..
-  qmake INCLUDEPATH="$STAGING/include" LIBS="-L$STAGING/lib" BOOST_LIB_SUFFIX="-mt" RELEASE=1
-  make $MAKEOPTS
-  install EduCoin $OUTDIR/bin/$GBUILD_BITS
-=======
   set -e -o pipefail
 
   WRAP_DIR=$HOME/wrapped
@@ -245,4 +191,3 @@ script: |
   done
   mkdir -p $OUTDIR/src
   mv $SOURCEDIST $OUTDIR/src
->>>>>>> Stashed changes
