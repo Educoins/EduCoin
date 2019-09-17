@@ -210,7 +210,7 @@ td {
 table.dataTable thead td,
 table.dataTable thead th {
     padding: 10px 18px;
-    border-bottom: 1px solid #74B040
+    border-bottom: 1px solid #74B040;
 }
 
 td {
@@ -1013,7 +1013,8 @@ progress::-webkit-progress-value {
 
 .no-syncing {
     background: url(qrc:///assets/icons/synced.png);
-    width: 26px
+    width: 24px;
+	height: 24px
 }
 
 .syncing-spinner {
