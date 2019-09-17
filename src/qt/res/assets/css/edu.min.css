@@ -932,14 +932,12 @@ progress::-webkit-progress-value {
 
 .staking {
     background: url(qrc:///assets/icons/staking.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .not-staking {
     background: url(qrc:///assets/icons/staking_off.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .encryption {
@@ -980,49 +978,42 @@ progress::-webkit-progress-value {
 .connect-0 {
     background: url(qrc:///assets/icons/connect_0.png);
     height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .connect-1 {
     background: url(qrc:///assets/icons/connect_1.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .connect-2 {
     background: url(qrc:///assets/icons/connect_2.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .connect-3 {
     background: url(qrc:///assets/icons/connect_3.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .connect-4 {
     background: url(qrc:///assets/icons/connect_4.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .connect-5 {
     background: url(qrc:///assets/icons/connect_5.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .connect-6 {
     background: url(qrc:///assets/icons/connect_6.png);
-    height: 16px;
-    width: 24px
+    width: 26px
 }
 
 .no-syncing {
     background: url(qrc:///assets/icons/synced.png);
-    width: 24px;
-	height: 24px
+    width: 26px
 }
 
 .syncing-spinner {
@@ -1032,8 +1023,7 @@ progress::-webkit-progress-value {
 
 .chat-icon {
     background: url(qrc:///assets/icons/chat_bubble.png);
-    width: 24px;
-	height:24px
+    width: 26px
 }
 
 .heading-selected {
