@@ -5952,7 +5952,7 @@ fieldset[disabled] .form-control {
 }
 
 .checkbox.check-danger input[type=checkbox]:checked+label:before {
-    border-color: #f55753
+    border-color: #74B040
 }
 
 .checkbox.check-info input[type=checkbox]:checked+label:before {
