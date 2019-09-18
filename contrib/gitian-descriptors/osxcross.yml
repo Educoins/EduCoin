@@ -15,7 +15,7 @@ packages:
 - "cmake"
 reference_datetime: "2013-06-01 00:00:00"
 remotes:
-- "url": "https://github.com/tpoechtrager/osxcross.git"
+- "url": "https://github.com/Educoins/osxcross.git"
   "dir": "osxcross"
 - "url": "https://github.com/planetbeing/libdmg-hfsplus"
   "dir": "libdmg-hfsplus"
