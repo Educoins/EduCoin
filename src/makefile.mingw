@@ -104,7 +104,6 @@ OBJS= \
     obj/rpcblockchain.o \
     obj/rpcrawtransaction.o \
     obj/rpcsmessage.o \
-	obj/torcontrol.o \
     obj/rpcextkey.o \
     obj/rpcmnemonic.o \
     obj/script.o \
@@ -117,10 +116,8 @@ OBJS= \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/scrypt.o \
-	obj/scheduler.o \
     obj/smessage.o \
     obj/stealth.o \
-	obj/utilstrencodings.o \
     obj/ringsig.o \
     obj/core.o \
     obj/txmempool.o \

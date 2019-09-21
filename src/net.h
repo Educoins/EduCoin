@@ -14,7 +14,7 @@
 #ifndef WIN32
 #include <arpa/inet.h>
 #endif
-#include "scheduler.h"
+
 #include "mruset.h"
 #include "netbase.h"
 #include "protocol.h"
@@ -29,7 +29,6 @@ class CNode;
 class CBlockIndex;
 class CBlockThinIndex;
 extern int nBestHeight;
-class scheduler;
 
 typedef int NodeId;
 
@@ -61,7 +60,7 @@ CNode* ConnectNode(CAddress addrConnect, const char *strDest = NULL);
 void MapPort(bool fUseUPnP);
 unsigned short GetListenPort();
 bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::string()));
-void StartNode(boost::thread_group& threadGroup, CScheduler& scheduler);
+void StartNode(boost::thread_group& threadGroup);
 bool StopNode();
 void SocketSendData(CNode *pnode);
 

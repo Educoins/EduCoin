@@ -118,15 +118,12 @@ OBJS= \
     obj/script.o \
     obj/sync.o \
     obj/util.o \
-	obj/torcontrol.o \
-	obj/utilstrencodings.o \
     obj/wallet.o \
     obj/walletdb.o \
     obj/noui.o \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/scrypt.o \
-	obj/scheduler.o \
     obj/zerocoin/Accumulator.o \
     obj/zerocoin/AccumulatorProofOfKnowledge.o \
     obj/zerocoin/Coin.o \

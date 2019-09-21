@@ -5,7 +5,6 @@
 
 #include "rpcserver.h"
 #include "rpcclient.h"
-#include "scheduler.h"
 #include "init.h"
 
 #include <boost/algorithm/string/predicate.hpp>
@@ -144,7 +143,6 @@ void WaitForShutdown(boost::thread_group* threadGroup)
 bool AppInit(int argc, char* argv[])
 {
     boost::thread_group threadGroup;
-	CScheduler scheduler;
     
     bool fRet = false;
     try
@@ -225,7 +223,7 @@ bool AppInit(int argc, char* argv[])
         if (GetBoolArg("-cli", false))
             printf("Starting...\n");
          
-        fRet = AppInit2(threadGroup, scheduler);
+        fRet = AppInit2(threadGroup);
     } catch (std::exception& e)
     {
         PrintException(&e, "AppInit()");

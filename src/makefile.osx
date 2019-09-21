@@ -96,12 +96,10 @@ OBJS= \
     obj/hash.o \
     obj/wallet.o \
     obj/walletdb.o \
-	obj/torcontrol.o \
     obj/noui.o \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/scrypt.o \
-	obj/utilstrencodings.o \
     obj/smessage.o \
     obj/stealth.o \
     obj/ringsig.o \
@@ -109,7 +107,6 @@ OBJS= \
     obj/txmempool.o \
     obj/chainparams.o \
     obj/state.o \
-	obj/scheduler.o \
     obj/bloom.o \
 	obj/keccak.o
 

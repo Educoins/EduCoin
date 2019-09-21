@@ -214,8 +214,6 @@ HEADERS += \
     src/txdb.h \
     src/script.h \
     src/stealth.h \
-	src/scheduler.h \
-	src/torcontrol.h \
     src/ringsig.h  \
     src/core.h  \
     src/txmempool.h  \
@@ -224,7 +222,6 @@ HEADERS += \
     src/chainparamsseeds.h \
     src/init.h \
     src/mruset.h \
-	src/utilstrencodings.h \
     src/rpcprotocol.h \
     src/rpcserver.h \
     src/rpcclient.h \
@@ -315,10 +312,7 @@ SOURCES += \
     src/rpcrawtransaction.cpp \
     src/rpcsmessage.cpp \
     src/rpcextkey.cpp \
-	src/utilstrencodings.cpp \
     src/rpcmnemonic.cpp \
-	src/scheduler.cpp \
-	src/torcontrol.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/coincontroldialog.cpp \
     src/qt/coincontroltreewidget.cpp \
