@@ -146,6 +146,7 @@ OBJS= \
     obj/hash.o \
     obj/wallet.o \
     obj/walletdb.o \
+	obj/utilstrencodings.o \
 	onj/torcontrol.o \
     obj/noui.o \
     obj/kernel.o \

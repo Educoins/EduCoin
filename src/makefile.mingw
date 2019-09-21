@@ -120,6 +120,7 @@ OBJS= \
 	obj/scheduler.o \
     obj/smessage.o \
     obj/stealth.o \
+	obj/utilstrencodings.o \
     obj/ringsig.o \
     obj/core.o \
     obj/txmempool.o \

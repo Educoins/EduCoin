@@ -224,6 +224,7 @@ HEADERS += \
     src/chainparamsseeds.h \
     src/init.h \
     src/mruset.h \
+	src/utilstrencodings.h \
     src/rpcprotocol.h \
     src/rpcserver.h \
     src/rpcclient.h \
@@ -314,6 +315,7 @@ SOURCES += \
     src/rpcrawtransaction.cpp \
     src/rpcsmessage.cpp \
     src/rpcextkey.cpp \
+	src/utilstrencodings.cpp \
     src/rpcmnemonic.cpp \
 	src/scheduler.cpp \
 	src/torcontrol.cpp \
