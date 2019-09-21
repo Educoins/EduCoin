@@ -226,7 +226,7 @@ std::string HelpMessage()
     strUsage += "  -onlynet=<net>         " + _("Only connect to nodes in network <net> (IPv4, IPv6 or Tor)") + "\n";
     strUsage += "  -discover              " + _("Discover own IP address (default: 1 when listening and no -externalip)") + "\n";
     strUsage += "  -listen                " + _("Accept connections from outside (default: 1 if no -proxy or -connect)") + "\n";
-	strUsage += "  -listenonion			  " + _("Automatically create Tor hidden service) (default: %d))";
+	strUsage += "  -listenonion			  " + _("Automatically create Tor hidden service (default: %d)");
     strUsage += "  -bind=<addr>           " + _("Bind to given address. Use [host]:port notation for IPv6") + "\n";
     strUsage += "  -dnsseed               " + _("Find peers using DNS lookup (default: 1)") + "\n";
     strUsage += "  -staking               " + _("Stake your coins to support network and gain reward (default: 1)") + "\n";

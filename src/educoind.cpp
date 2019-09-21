@@ -223,7 +223,7 @@ bool AppInit(int argc, char* argv[])
         if (GetBoolArg("-cli", false))
             printf("Starting...\n");
          
-        fRet = AppInit2(threadGroup);
+        fRet = AppInit2(threadGroup, scheduler);
     } catch (std::exception& e)
     {
         PrintException(&e, "AppInit()");
