@@ -14,7 +14,7 @@
 #ifndef WIN32
 #include <arpa/inet.h>
 #endif
-
+#include "scheduler.h"
 #include "mruset.h"
 #include "netbase.h"
 #include "protocol.h"
