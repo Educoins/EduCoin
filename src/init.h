@@ -7,11 +7,13 @@
 
 #include "wallet.h"
 
+class CScheduler;
+
 extern CWallet* pwalletMain;
 void StartShutdown();
 bool ShutdownRequested();
 void Shutdown();
-bool AppInit2(boost::thread_group& threadGroup);
+bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler);
 std::string HelpMessage();
 
 #endif
