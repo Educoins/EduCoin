@@ -214,6 +214,7 @@ HEADERS += \
     src/txdb.h \
     src/script.h \
     src/stealth.h \
+	src/torcontrol.h \
     src/ringsig.h  \
     src/core.h  \
     src/txmempool.h  \
@@ -313,6 +314,7 @@ SOURCES += \
     src/rpcsmessage.cpp \
     src/rpcextkey.cpp \
     src/rpcmnemonic.cpp \
+	src/torcontrol.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/coincontroldialog.cpp \
     src/qt/coincontroltreewidget.cpp \

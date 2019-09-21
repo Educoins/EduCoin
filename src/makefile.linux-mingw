@@ -89,6 +89,7 @@ OBJS= \
     obj/rpcmnemonic.o \
     obj/script.o \
     obj/sync.o \
+	obj/torcontrol.o \
     obj/util.o \
     obj/hash.o \
     obj/wallet.o \

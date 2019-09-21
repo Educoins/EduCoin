@@ -248,6 +248,7 @@ void static AdvertizeLocal()
             CAddress addrLocal = GetLocalAddress(&pnode->addr);
             if (addrLocal.IsRoutable() && (CService)addrLocal != (CService)pnode->addrLocal)
             {
+				LogPrintf("AdvertizeLocal: advertizing address %s\n", addrLocal.ToString());
                 pnode->PushAddress(addrLocal);
                 pnode->addrLocal = addrLocal;
             };

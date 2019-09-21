@@ -12,7 +12,7 @@
 #include "state.h"
 #include "sync.h"
 #include "util.h"
-
+#include "torcontrol.h"
 #include "ui_interface.h"
 
 #include "smessage.h"
@@ -98,6 +98,7 @@ bool Finalise()
         bitdb.Flush(false);
     
     StopNode();
+	StopTorControl();
     
     if (pwalletMain)
     {
@@ -210,6 +211,7 @@ std::string HelpMessage()
     strUsage += "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 25)") + "\n";
     strUsage += "  -dblogsize=<n>         " + _("Set database disk log size in megabytes (default: 100)") + "\n";
     strUsage += "  -timeout=<n>           " + _("Specify connection timeout in milliseconds (default: 5000)") + "\n";
+    strUsage += HelpMessageOpt("-torcontrol=<ip>:<port>", strprintf(_("Tor control port to use if onion listening enabled (default: %s)"), DEFAULT_TOR_CONTROL));
     strUsage += "  -proxy=<ip:port>       " + _("Connect through socks proxy") + "\n";
     strUsage += "  -socks=<n>             " + _("Select the version of socks proxy to use (4-5, default: 5)") + "\n";
     strUsage += "  -tor=<ip:port>         " + _("Use proxy to reach tor hidden services (default: same as -proxy)") + "\n";
@@ -223,6 +225,7 @@ std::string HelpMessage()
     strUsage += "  -onlynet=<net>         " + _("Only connect to nodes in network <net> (IPv4, IPv6 or Tor)") + "\n";
     strUsage += "  -discover              " + _("Discover own IP address (default: 1 when listening and no -externalip)") + "\n";
     strUsage += "  -listen                " + _("Accept connections from outside (default: 1 if no -proxy or -connect)") + "\n";
+	strUsage += HelpMessageOpt("-listenonion", strprintf(_("Automatically create Tor hidden service (default: %d)"), DEFAULT_LISTEN_ONION));
     strUsage += "  -bind=<addr>           " + _("Bind to given address. Use [host]:port notation for IPv6") + "\n";
     strUsage += "  -dnsseed               " + _("Find peers using DNS lookup (default: 1)") + "\n";
     strUsage += "  -staking               " + _("Stake your coins to support network and gain reward (default: 1)") + "\n";
@@ -464,6 +467,9 @@ bool AppInit2(boost::thread_group& threadGroup)
         // do not map ports or try to retrieve public IP when not listening (pointless)
         SoftSetBoolArg("-upnp", false);
         SoftSetBoolArg("-discover", false);
+		
+		if (SoftSetBoolArg("-listenonion", false))
+		LogPrintf("%s: parameter interaction: -listen=0 -> setting -listenonion=0\n", __func__);
     };
 
     if (mapArgs.count("-externalip"))
@@ -1034,6 +1040,8 @@ bool AppInit2(boost::thread_group& threadGroup)
     LogPrintf("mapAddressBook.size() = %u\n",           pwalletMain->mapAddressBook.size());
 
     StartNode(threadGroup);
+	if (GetBoolArg("-listenonion", DEFAULT_LISTEN_ONION))
+		StartTorControl(threadGroup, scheduler);
     
     if (fServer)
         StartRPCThreads();
