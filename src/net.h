@@ -29,6 +29,7 @@ class CNode;
 class CBlockIndex;
 class CBlockThinIndex;
 extern int nBestHeight;
+class scheduler;
 
 typedef int NodeId;
 
@@ -60,7 +61,7 @@ CNode* ConnectNode(CAddress addrConnect, const char *strDest = NULL);
 void MapPort(bool fUseUPnP);
 unsigned short GetListenPort();
 bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::string()));
-void StartNode(boost::thread_group& threadGroup, scheduler);
+void StartNode(boost::thread_group& threadGroup, CScheduler& scheduler);
 bool StopNode();
 void SocketSendData(CNode *pnode);
 

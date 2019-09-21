@@ -9,6 +9,7 @@
 #include "strlcpy.h"
 #include "addrman.h"
 #include "ui_interface.h"
+#include "scheduler.h"
 
 #ifdef WIN32
 #include <string.h>
@@ -1708,7 +1709,7 @@ void static Discover(boost::thread_group& threadGroup)
 }
 
 
-void StartNode(boost::thread_group& threadGroup)
+void StartNode(boost::thread_group& threadGroup, CScheduler& scheduler)
 {
     if (semOutbound == NULL) {
         // initialize semaphore
