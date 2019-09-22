@@ -775,20 +775,20 @@ void GUI::setEncryptionStatus(int status)
         encryptionIcon.   addClass("fa-unlock");
         toggleLockIcon.removeClass("fa-unlock");
         toggleLockIcon.   addClass("fa-lock");
-        encryptionIcon   .setAttribute("src", "qrc:///assets/icons/lock_off.png");
+        encryptionIcon   .setAttribute("src", "qrc:///assets/icons/lock_off");
         
         if (fWalletUnlockStakingOnly)
         {
             encryptionIcon   .setAttribute("data-title", tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b> for staking only"));
             encryptionIcon.removeClass("vred");
             encryptionIcon.addClass("lightgrey");
-			encryptionIcon   .setAttribute("src", "qrc:///assets/icons/lock_stake.png");
+			encryptionIcon   .setAttribute("src", "qrc:///assets/icons/lock_stake");
         } else
         {
             encryptionIcon   .setAttribute("data-title", tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b>"));
             encryptionIcon.addClass("vred");
             encryptionIcon.removeClass("lightgrey");
-			encryptionIcon   .setAttribute("src", "qrc:///assets/icons/lock_off.png");
+			encryptionIcon   .setAttribute("src", "qrc:///assets/icons/lock_off");
         };
         
         encryptButton.addClass("none");
