@@ -77,7 +77,6 @@
         <file alias="assets/icons/tx_mined.png">src/qt/res/assets/icons/tx_mined.png</file>
         <file alias="assets/icons/tx_output.png">src/qt/res/assets/icons/tx_output.png</file>
         <file alias="assets/img/about.png">src/qt/res/assets/img/about.png</file>
-        <file alias="assets/img/avatars/kewde.png">src/qt/res/assets/img/avatars/kewde.png</file>
         <file alias="assets/img/linear_gradient.png">src/qt/res/assets/img/linear_gradient.png</file>
         <file alias="assets/img/progress/progress-bar-complete.svg">src/qt/res/assets/img/progress/progress-bar-complete.svg</file>
         <file alias="assets/img/progress/progress-bar-danger.svg">src/qt/res/assets/img/progress/progress-bar-danger.svg</file>
@@ -97,10 +96,7 @@
         <file alias="assets/img/progress/progress-circle-primary.svg">src/qt/res/assets/img/progress/progress-circle-primary.svg</file>
         <file alias="assets/img/progress/progress-circle-success.svg">src/qt/res/assets/img/progress/progress-circle-success.svg</file>
         <file alias="assets/img/progress/progress-circle-warning.svg">src/qt/res/assets/img/progress/progress-circle-warning.svg</file>
-        <file alias="assets/img/edu_leak_image.jpg">src/qt/res/assets/img/edu_leak_image.jpg</file>
-        <file alias="assets/img/edu-vertical.png">src/qt/res/assets/img/edu-vertical.png</file>
         <file alias="assets/img/EduCoin_logo.png">src/qt/res/assets/img/EduCoin_logo.png</file>
-        <file alias="assets/img/shoppingcart.png">src/qt/res/assets/img/shoppingcart.png</file>
         <file alias="assets/img/splash.png">src/qt/res/assets/img/splash.png</file>
         <file alias="assets/js/navigation.min.js">src/qt/res/assets/js/navigation.min.js</file>
         <file alias="assets/js/pages/send.min.js">src/qt/res/assets/js/pages/send.min.js</file>
