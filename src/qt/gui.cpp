@@ -790,10 +790,6 @@ void GUI::setEncryptionStatus(int status)
             if(fWalletUnlockStakingOnly)
                 datatitle.append(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b> for staking only."));
 
-            else if(fWalletUnlockStakingOnly)
-                datatitle.append(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b> for staking only."));
-
-
             encryptionIcon   .setAttribute("data-title", datatitle);
             encryptionIcon.removeClass("red");
             encryptionIcon.addClass("orange");
