@@ -2086,7 +2086,7 @@ QVariantMap UIBridge::extKeySetMaster(QString extKeyID)
         if (0 != (rv = pwalletMain->ExtKeySetMaster(&wdb, idNewMaster)))
         {
             wdb.TxnAbort();
-            result.insert("error_msg"       , QString::fromStdString(strprintf("ExtKeySetMaster failed, %s.", ExtKeyGetString(rv))));
+            result.insert("error_msg"       , QString::fromStdString(strprintf("ExtKeySetMaster failed - try unlocking yourr wallet., %s.", ExtKeyGetString(rv))));
             return result;
         };
         if (!wdb.TxnCommit())

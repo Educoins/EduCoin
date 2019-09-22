@@ -1046,7 +1046,7 @@ Value extkey(const Array &params, bool fHelp)
             if (0 != (rv = pwalletMain->ExtKeySetMaster(&wdb, idNewMaster)))
             {
                 wdb.TxnAbort();
-                throw std::runtime_error(strprintf("ExtKeySetMaster failed, %s.", ExtKeyGetString(rv)));
+                throw std::runtime_error(strprintf("ExtKeySetMaster failed - try unlocking yourr wallet., %s.", ExtKeyGetString(rv)));
             };
             if (!wdb.TxnCommit())
                 throw std::runtime_error("TxnCommit failed.");
