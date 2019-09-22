@@ -72,9 +72,30 @@ td {
     color: #f39347
 }
 
-.iframe {
-	border:1px solid black;
-	width: 100%
+/* style iframe */  
+.iframe-container {  
+position: relative;  
+margin: 5px auto;  
+height: 0;  
+overflow: hidden;  
+}  
+.iframe-container iframe {  
+position: absolute;
+top: 0;
+left: 0;
+margin: 5px auto;
+padding: 0;
+width: 100%;
+height: 100%;
+border: 1px solid #7a8b8b;
+/* style following properties (necessary for proper handling  
+of overflow and scrolling) inline in div container  
+around iframe because not stable in CSS */  
+-webkit-overflow-scrolling: touch  
+overflow: auto; */  
+}  
+.iframe-container-for-wxh-600x330 {  
+padding: 10px 10px 55% 10px;   /* padding-bottom = h/w as % */  
 }
 
 .page-content-wrapper {
