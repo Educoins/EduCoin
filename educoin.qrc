@@ -78,7 +78,6 @@
         <file alias="assets/icons/tx_output.png">src/qt/res/assets/icons/tx_output.png</file>
         <file alias="assets/img/about.png">src/qt/res/assets/img/about.png</file>
         <file alias="assets/img/avatars/kewde.png">src/qt/res/assets/img/avatars/kewde.png</file>
-        <file alias="assets/img/avatars/litebit.png">src/qt/res/assets/img/avatars/litebit.png</file>
         <file alias="assets/img/linear_gradient.png">src/qt/res/assets/img/linear_gradient.png</file>
         <file alias="assets/img/progress/progress-bar-complete.svg">src/qt/res/assets/img/progress/progress-bar-complete.svg</file>
         <file alias="assets/img/progress/progress-bar-danger.svg">src/qt/res/assets/img/progress/progress-bar-danger.svg</file>
