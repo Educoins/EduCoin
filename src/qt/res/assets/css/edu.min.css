@@ -72,6 +72,11 @@ td {
     color: #f39347
 }
 
+.iframe {
+	border:1px solid black;
+	width: 100%
+}
+
 .page-content-wrapper {
     background: #F0F1F3
 }
