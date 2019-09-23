@@ -9,7 +9,6 @@
 #include "strlcpy.h"
 #include "addrman.h"
 #include "ui_interface.h"
-#include "chainparams.h"
 
 #ifdef WIN32
 #include <string.h>
@@ -153,27 +152,6 @@ bool GetLocal(CService& addr, const CNetAddr *paddrPeer)
         }
     }
     return nBestScore >= 0;
-}
-
-//! Convert the pnSeeds6 array into usable address objects.
-static std::vector<CAddress> convertSeed6(const std::vector<SeedSpec6> &vSeedsIn)
-{
-    // It'll only connect to one or two seed nodes because once it connects,
-    // it'll get a pile of addresses with newer timestamps.
-    // Seed nodes are given a random 'last seen time' of between one and two
-    // weeks ago.
-    const int64_t nOneWeek = 7*24*60*60;
-    std::vector<CAddress> vSeedsOut;
-    vSeedsOut.reserve(vSeedsIn.size());
-    for (std::vector<SeedSpec6>::const_iterator i(vSeedsIn.begin()); i != vSeedsIn.end(); ++i)
-    {
-        struct in6_addr ip;
-        memcpy(&ip, i->addr, sizeof(ip));
-        CAddress addr(CService(ip, i->port));
-        addr.nTime = GetTime() - GetRand(nOneWeek) - nOneWeek;
-        vSeedsOut.push_back(addr);
-    }
-    return vSeedsOut;
 }
 
 // get best local address for a particular peer as a CAddress
@@ -1325,7 +1303,7 @@ void ThreadOpenConnections()
             static bool done = false;
             if (!done) {
                 LogPrintf("Adding fixed seed nodes as DNS doesn't seem to be available.\n");
-                addrman.Add(convertSeed6(Params().FixedSeeds()), CNetAddr("127.0.0.1"));
+                addrman.Add(Params().FixedSeeds(), CNetAddr("127.0.0.1"));
                 done = true;
             }
         }
