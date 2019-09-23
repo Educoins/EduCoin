@@ -644,14 +644,14 @@ void ThreadSecureMsg()
                     smsgBuckets.erase(it++);
                 } else
                 {
+                    if (it->second.nLockCount > 0) // -- tick down nLockCount, so will eventually expire if peer never sends data
                     {
-						if (it->second.nLockCount > 0) // -- tick down nLockCount, so will eventually expire if peer never sends data
-                        {
-                            it->second.nLockCount--;
+                        it->second.nLockCount--;
 
                         if (it->second.nLockCount == 0)     // lock timed out
                         {
                             vTimedOutLocks.push_back(std::make_pair(it->first, it->second.nLockPeerId)); // cs_vNodes
+
                             it->second.nLockPeerId = 0;
                         }; // if (it->second.nLockCount == 0)
                     }; // ! if (it->first < cutoffTime)
