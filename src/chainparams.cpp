@@ -73,12 +73,9 @@ public:
 		vSeeds.push_back(CDNSSeedData("mainnet-seed.educoin.tools", "mainnet-seed.educoin.tools"));
     }
     virtual const CBlock& GenesisBlock() const { return genesis; }
-    virtual const std::vector<CAddress>& FixedSeeds() const {
-        return vFixedSeeds;
-    }
+	
 protected:
     CBlock genesis;
-    std::vector<CAddress> vFixedSeeds;
 };
 
 class CMainParams : public CBaseChainParams {
