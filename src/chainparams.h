@@ -81,7 +81,6 @@ public:
     virtual Network NetworkID() const = 0;
     const std::vector<CDNSSeedData>& DNSSeeds() const { return vSeeds; }
     const std::vector<unsigned char> &Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
-    virtual const std::vector<CAddress>& FixedSeeds() const = 0;
 	const std::vector<SeedSpec6>& FixedSeeds() const { return vFixedSeeds; }
     
     std::string NetworkIDString() const { return strNetworkID; }
