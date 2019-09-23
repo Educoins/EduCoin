@@ -182,7 +182,7 @@ bool CWallet::AddCScript(const CScript& redeemScript)
 // serves to disable the trivial sendmoney when OS account compromised
 // provides no real security
 bool fWalletUnlockStakingOnly = false;
-
+bool fWalletUnlockMessagingEnabled = false;
 bool CWallet::LoadCScript(const CScript& redeemScript)
 {
     /* A sanity check was added in pull #3843 to avoid adding redeemScripts
@@ -4665,7 +4665,7 @@ bool CWallet::SendEDUToToken(CStealthAddress& sxAddress, int64_t nValue, std::st
 
     if (fWalletUnlockStakingOnly)
     {
-        sError = _("Error: Wallet unlocked for staking only, unable to create transaction.");
+        sError = _("Error: Wallet unlocked for staking, unable to create transaction.");
         return false;
     };
 

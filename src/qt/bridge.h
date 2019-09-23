@@ -13,7 +13,7 @@ class SendCoinsRecipient;
 #include <QObject>
 #include <QModelIndex>
 
-
+extern bool fWalletUnlockMessagingEnabled;
 
 
 class UIBridge : public QObject

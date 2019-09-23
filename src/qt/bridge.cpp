@@ -936,10 +936,15 @@ bool UIBridge::setPubKey(QString address, QString pubkey)
 
 bool UIBridge::sendMessage(const QString &address, const QString &message, const QString &from)
 {
-    WalletModel::UnlockContext ctx(window->walletModel->requestUnlock());
+    if(!fWalletUnlockMessagingEnabled){
+        WalletModel::UnlockContext ctx(window->walletModel->requestUnlock());
 
-    // Unlock wallet was cancelled
-    if(!ctx.isValid())
+        // Unlock wallet was cancelled
+        if(!ctx.isValid())
+            return false;
+    }
+
+    if(!fWalletUnlockMessagingEnabled){
         return false;
 
     MessageModel::StatusCode sendstatus = thMessage->mtm->sendMessage(address, message, from);

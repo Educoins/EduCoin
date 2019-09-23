@@ -783,11 +783,17 @@ void GUI::setEncryptionStatus(int status)
         toggleLockIcon.   addClass("fa-lock");
         encryptionIcon   .setAttribute("src", "qrc:///icons/lock_open");
 
-        if (fWalletUnlockStakingOnly)
+        if (fWalletUnlockStakingOnly || fWalletUnlockMessagingEnabled)
         {
             QString datatitle = "";
 
-            if(fWalletUnlockStakingOnly)
+            if(fWalletUnlockStakingOnly && fWalletUnlockMessagingEnabled)
+                datatitle.append(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b> for staking and messaging only."));
+
+            else if(fWalletUnlockMessagingEnabled)
+                datatitle.append(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b> for messaging only."));
+
+            else if(fWalletUnlockStakingOnly)
                 datatitle.append(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b> for staking only."));
 
             encryptionIcon   .setAttribute("data-title", datatitle);
