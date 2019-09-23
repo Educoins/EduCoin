@@ -946,7 +946,7 @@ bool UIBridge::sendMessage(const QString &address, const QString &message, const
 
     if(!fWalletUnlockMessagingEnabled){
         return false;
-
+	}
     MessageModel::StatusCode sendstatus = thMessage->mtm->sendMessage(address, message, from);
 
     switch(sendstatus)
