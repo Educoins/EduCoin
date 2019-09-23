@@ -24,7 +24,10 @@ struct CDNSSeedData {
     CDNSSeedData(const std::string &strName, const std::string &strHost) : name(strName), host(strHost) {}
 };
 
-
+struct SeedSpec6 {
+    uint8_t addr[16];
+    uint16_t port;
+};
 
 /**
  * CChainParams defines various tweakable parameters of a given instance of the
@@ -79,6 +82,7 @@ public:
     const std::vector<CDNSSeedData>& DNSSeeds() const { return vSeeds; }
     const std::vector<unsigned char> &Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
     virtual const std::vector<CAddress>& FixedSeeds() const = 0;
+	const std::vector<SeedSpec6>& FixedSeeds() const { return vFixedSeeds; }
     
     std::string NetworkIDString() const { return strNetworkID; }
     
@@ -107,6 +111,7 @@ protected:
     int nFirstPosv3Block;
     std::string strDataDir;
     std::vector<CDNSSeedData> vSeeds;
+	std::vector<SeedSpec6> vFixedSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
 	int nLastPOWBlock;
 };
