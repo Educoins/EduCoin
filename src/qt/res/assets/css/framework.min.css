@@ -2562,7 +2562,7 @@ hr.dotted {
     -moz-border-radius: 3px;
     background-image: none !important;
     color: #626262;
-    background-color: #fff;
+    background-color: #f0f1f3;
     text-shadow: none;
     line-height: 21px;
     padding-left: 17px;
@@ -2920,7 +2920,7 @@ fieldset[disabled] .btn-danger:hover {
 .btn-default,
 .btn-default:focus {
     color: #5e5e5e;
-    background-color: #fff;
+    background-color: #f0f1f3;
     border-color: #f0f0f0
 }
 
