@@ -275,10 +275,10 @@ public:
     QString addMessage(int row)
     {
 		//QString message = "{\"id\":\"%10\",\"type\":\"%1\",\"sent_date\":\"%2\",\"received_date\":\"%3\", \"label_value\":\"%4\",\"label\":\"%5\",\"labelTo\":\"%11\",\"to_address\":\"%6\",\"from_address\":\"%7\",\"message\":\"%8\",\"read\":%9},";
-        return QString("{\"id\":\"%10\",\"type\":\"%1\",\"sent_date\":\"%2\",\"received_date\":\"%3\", \"label_value\":\"%4\",\"label\":\"%5\",\"labelTo\":\"%11\",\"to_address\":\"%6\",\"from_address\":\"%7\",\"message\":\"%8\",\"read\":%9},")
+		return QString("{\"id\":\"%10\",\"type\":\"%1\",\"sent_date\":\"%2\",\"received_date\":\"%3\", \"label_value\":\"%4\",\"label\":\"%5\",\"labelTo\":\"%11\",\"to_address\":\"%6\",\"from_address\":\"%7\",\"message\":\"%8\",\"read\":%9},")
                 .arg(mtm->index(row, MessageModel::Type)            .data().toString())
-                .arg(mtm->index(row, MessageModel::SentDateTime)    .data().toDateTime().toTime_t())
-                .arg(mtm->index(row, MessageModel::ReceivedDateTime).data().toDateTime().toTime_t())
+                .arg(QString::number(mtm->index(row, MessageModel::SentDateTime)    .data().toDateTime().toTime_t()).toHtmlEscaped())
+                .arg(QString::number(mtm->index(row, MessageModel::ReceivedDateTime).data().toDateTime().toTime_t()).toHtmlEscaped())
                 .arg(mtm->index(row, MessageModel::Label)           .data(MessageModel::LabelRole).toString())
                 .arg(mtm->index(row, MessageModel::Label)           .data().toString().replace("\\", "\\\\").replace("/", "\\/").replace("\"","\\\""))
                 .arg(mtm->index(row, MessageModel::ToAddress)       .data().toString())
@@ -883,6 +883,7 @@ void UIBridge::appendMessages(QString messages, bool reset)
 
 void UIBridge::appendMessage(int row)
 {
+	LogPrintf("appendMessage");
     emitMessage(window->messageModel->index(row, MessageModel::Key)             .data().toString().toHtmlEscaped(),
                 window->messageModel->index(row, MessageModel::Type)            .data().toString().toHtmlEscaped(),
                 window->messageModel->index(row, MessageModel::SentDateTime)    .data().toDateTime().toTime_t(),
@@ -994,20 +995,48 @@ bool UIBridge::sendMessage(const QString &address, const QString &message, const
     return true;
 }
 
-bool UIBridge::joinGroupChat(QString privkey, QString label){
+QString UIBridge::createGroupChat(QString label){
+    //return address to invite to people to.
+    LOCK2(cs_main, pwalletMain->cs_wallet);
+	
+    std::string strLabel = "group_" + label.toStdString();
+
+    RandAddSeedPerfmon(); // util.cpp
+    CKey secret; // hey.h
+    secret.MakeNewKey(true);
+    CPubKey pubkey = secret.GetPubKey();
+    CKeyID vchAddress = pubkey.GetID();
+
+    pwalletMain->MarkDirty();
+    CBitcoinAddress addr(vchAddress);
+
+    std::string strAddress = addr.ToString();
+
+    pwalletMain->SetAddressBookName(addr.Get(), strLabel, NULL, true, true);
+
+    if (!pwalletMain->AddKeyPubKey(secret, pubkey))
+            return "false";
+
+    SecureMsgAddWalletAddresses();
+
+    return QString::fromStdString(strAddress);
+
+}
+
+QString UIBridge::joinGroupChat(QString privkey, QString label){
     /*
     EXPERIMENTAL CODE, UNTESTED. 
     */
     std::string strSecret = privkey.toStdString();
-    std::string strLabel = label.toStdString();
+    std::string strLabel = "group_" + label.toStdString();
 
 
     int64_t nCreateTime = 1;
     CBitcoinSecret vchSecret;
     bool fGood = vchSecret.SetString(strSecret);
 
-    if (!fGood) return false; //throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid private key");
-    if (fWalletUnlockStakingOnly) return false; //throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Wallet is unlocked for staking only.");
+    if (!fGood) return "false"; //throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid private key");
+    if (fWalletUnlockStakingOnly) return "false"; //throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Wallet is unlocked for staking only.");
 
     CKey key = vchSecret.GetKey();
     CPubKey pubkey = key.GetPubKey();
@@ -1020,7 +1049,7 @@ bool UIBridge::joinGroupChat(QString privkey, QString label){
 
         // Don't throw error in case a key is already there
         if (pwalletMain->HaveKey(vchAddress))
-            return false;
+            return "false";
 
         pwalletMain->mapKeyMetadata[vchAddress].nCreateTime = nCreateTime;
 
@@ -1034,7 +1063,84 @@ bool UIBridge::joinGroupChat(QString privkey, QString label){
     }
 
     SecureMsgAddWalletAddresses();
-    return true;
+    //TODO: return address and appendAddress with javascript
+    CBitcoinAddress addr(vchAddress);
+    return QString::fromStdString(addr.ToString());
+}
+
+QVariantList UIBridge::inviteGroupChat(QString qsaddress, QVariantList invites, QString from){
+    //TODO: check if part of HD wallet, if it is refuse to send invites.
+    QVariantList r; //Return 
+
+    QString actualLabel = getAddressLabel(qsaddress);
+
+    if(!actualLabel.startsWith("group_")){
+        LogPrintf("[inviteGroupChat] -- This should never happen, if it does please notify devteam.\n");
+        QMessageBox::warning(window, tr("Sanity Error!"),
+            tr("Error: a sanity check prevented the transfer of a non-group private key, please close your wallet and report this error to the development team as soon as possible."),
+            QMessageBox::Ok, QMessageBox::Ok);
+    } else {
+        actualLabel.replace("group_","");
+    }
+
+    QString informText = "Are you sure you want to invite the following addresses to this group?\n";
+
+    for(int i = 0; i < invites.size(); i++){
+        QString inviteAddress = invites.at(i).toString();
+        QString inviteLabel = getAddressLabel(inviteAddress);
+        informText.append(inviteLabel + " -- " + inviteAddress + "\n");
+
+    }
+
+    QMessageBox msgBox;
+    msgBox.setStyleSheet("QLabel{min-width: 600px;}");
+    msgBox.setText("Inviting to group " + actualLabel);
+    msgBox.setInformativeText(informText);
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+
+    if(msgBox.exec() == QMessageBox::Cancel){
+        LogPrintf("[inviteGroupChat] -- inviteGroupChat aborted.\n");
+        r.append("error");
+        return r;
+    }
+    LogPrintf("[inviteGroupChat] -- start\n");
+    CBitcoinAddress address;
+
+    if (!address.SetString(qsaddress.toStdString())){
+        LogPrintf("[inviteGroupChat] -- SetString address failed.\n");
+        r.append("error");
+        return r;
+    }
+
+    CKeyID keyID;
+    if (!address.GetKeyID(keyID)){
+        LogPrintf("[inviteGroupChat] -- GetKeyID failed.\n");
+        r.append("error");
+        return r;
+    }
+
+    CKey vchSecret;
+    if (!pwalletMain->GetKey(keyID, vchSecret)){
+        LogPrintf("[inviteGroupChat] -- GetKey failed.\n");
+        r.append("error");
+        return r;
+    }
+
+    QString message = "/invite " + QString::fromStdString(CBitcoinSecret(vchSecret).ToString()) + " " + actualLabel;
+
+    //SecureString privkey(); //.reserve then .assign(CBitcoinSecret(vchSecret).ToString()))
+
+    for(int i = 0; i < invites.size(); i++){
+		QString inviteAddress = invites.at(i).toString();
+        LogPrintf("[inviteGroupChat] sending invite!");
+        MessageModel::StatusCode sendstatus = thMessage->mtm->sendMessage(inviteAddress, message, from);
+
+        if(sendstatus == MessageModel::OK)
+            r.append(inviteAddress);
+    }
+
+    return invites;
 }
 
 void UIBridge::connectSignals()
