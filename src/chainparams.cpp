@@ -69,8 +69,8 @@ public:
         genesis.nVersion = 1;
         genesis.nTime    = GENESIS_BLOCK_TIME;
         
-        vSeeds.push_back(CDNSSeedData("mainnet-seed.educoinacademy.com", "mainnet-seed.educoinacademy.com"));
-		vSeeds.push_back(CDNSSeedData("mainnet-seed.educoin.tools", "mainnet-seed.educoin.tools"));
+        vSeeds.push_back(CDNSSeedData("mainnet-seed.educoin.tools", "mainnet-seed.educoin.tools"));
+		vSeeds.push_back(CDNSSeedData("mainnet-seed2.educoin.tools", "mainnet-seed2.educoin.tools"));
     }
     virtual const CBlock& GenesisBlock() const { return genesis; }
 	
