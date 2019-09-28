@@ -934,7 +934,7 @@ bool UIBridge::setPubKey(QString address, QString pubkey)
     return SecureMsgAddAddress(sendTo, pbkey) == 0;
 }
 
-bool ShadowBridge::sendMessage(const QString &address, const QString &message, const QString &from)
+bool UIBridge::sendMessage(const QString &address, const QString &message, const QString &from)
 {
     bool is_encrypted = window->walletModel->getEncryptionStatus() != WalletModel::Unencrypted;
 
