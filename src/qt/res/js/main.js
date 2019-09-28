@@ -1890,17 +1890,18 @@ function appendMessage(id, type, sent_date, received_date, label_value, label, l
     /* This is just a cheat to test the formatting, because the if clause down below is always returning false.
     It will put all messages under the same contact*/
 
-    if(type != "S" && labelTo.lastIndexOf("group_", 0) === 0){
+    if(type == "R" && labelTo.lastIndexOf("group_", 0) === 0){ //Received, to group
         key = labelTo.replace('group_', '');
-        //them = self;
+
         group = true;
-    } else if(label_value.lastIndexOf("group_", 0) === 0){
+    } else if(label_value.lastIndexOf("group_", 0) === 0){ //sent to group, 
         key = label_value.replace('group_', '');
         group = true;
-    } else if(labelTo.lastIndexOf("group_", 0) === 0){
+    } else if(labelTo.lastIndexOf("group_", 0) === 0){ //sent by group, should not be possible but yeah anything can happen.
         group = true;
     }
 
+	//alert("Debug label=" + label_value + " labelTo=" + labelTo + " group=" + group + " key (me)=" + key);
     /* 
     Basically I seperated the sender of the message (label_msg) from the contact[key].
     So we can still group by the key, but the messages in the chat have the right sender label.
@@ -1931,13 +1932,15 @@ function appendContact (key, newcontact) {
 
     var unread_count = $.grep(contact.messages, function(a){return a.type=="R"&&a.read==false}).length;
 
+    var contact_address = (contact.messages[0].group && contact.messages[0].type != "S") ? contact.messages[0].self : contact.messages[0].them;
     if(contact_el.length == 0) {
+        //alert("[appendContact] key=" + key + " address=" + contact.messages[0].them + " self=" + contact.messages[0].self + " group=" + contact.messages[0].group + " type=" + contact.messages[0].type);
         contact_list.append(
             "<li id='contact-"+ key +"' class='contact' data-title='"+contact.label+"'>\
                 <img src='"+ contact.avatar +"' />\
                 <span class='contact-info'>\
                     <span class='contact-name'>"+contact.label+"</span>\
-                    <span class='contact-address'>"+contact.messages[0].them+"</span>\
+                    <span class='contact-address'>"+ contact_address + "</span>\
                 </span>\
                 <span class='contact-options'>\
                         <span class='message-notifications"+(unread_count==0?' none':'')+"'>"+unread_count+"</span>\
@@ -2024,12 +2027,15 @@ function appendContact (key, newcontact) {
             setTimeout(scrollerBottom, 5000);
 
             //discussion.children("[title]").on("mouseenter", tooltip);
-
-            if(!bSentMessage){
-                $("#message-from-address").val(message.self);
-                $("#message-to-address").val(message.them);
-            }
 			
+            if(!bSentMessage){
+                if(!message.group){ //normal procedure
+                    $("#message-from-address").val(message.self);
+                    $("#message-to-address").val(message.them); //them
+                } else if(message.type == "R") { //if it's a group, and no messages were sent from it yet, then we have not sent a message to it.
+                    $("#message-to-address").val(message.self);
+                }
+            }
 			
         }).on("mouseenter", tooltip);
 
