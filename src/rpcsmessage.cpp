@@ -186,6 +186,8 @@ Value smsglocalkeys(const Array& params, bool fHelp)
     {
         uint32_t nKeys = 0;
         int all = mode == "all" ? 1 : 0;
+        Array keys;
+		
         for (std::vector<SecMsgAddress>::iterator it = smsgAddresses.begin(); it != smsgAddresses.end(); ++it)
         {
             if (!all 
@@ -212,18 +214,27 @@ Value smsglocalkeys(const Array& params, bool fHelp)
             };
             
             sPublicKey = EncodeBase58(pubKey.begin(), pubKey.end());
+			
+			Object objM;
             
             std::string sLabel = pwalletMain->mapAddressBook[keyID];
             std::string sInfo;
             if (all)
                 sInfo = std::string("Receive ") + (it->fReceiveEnabled ? "on,  " : "off, ");
             sInfo += std::string("Anon ") + (it->fReceiveAnon ? "on" : "off");
-            result.push_back(Pair("key", it->sAddress + " - " + sPublicKey + " " + sInfo + " - " + sLabel));
+            //result.push_back(Pair("key", it->sAddress + " - " + sPublicKey + " " + sInfo + " - " + sLabel));
+            objM.push_back(Pair("key", it->sAddress));
+            objM.push_back(Pair("publickey",sPublicKey));
+            objM.push_back(Pair("receive",(it->fReceiveEnabled ? "1" : "0")));
+            objM.push_back(Pair("anon",(it->fReceiveAnon ? "1" : "0")));
+            objM.push_back(Pair("label",sLabel));
+            keys.push_back(objM);
             
             nKeys++;
         };
         
-        result.push_back(Pair("result", strprintf("%u keys listed.", nKeys)));
+		result.push_back(Pair("keys", keys));
+		result.push_back(Pair("result", strprintf("%u", nKeys)));
     } else
     if (mode == "recv")
     {
@@ -322,6 +333,8 @@ Value smsglocalkeys(const Array& params, bool fHelp)
     if (mode == "wallet")
     {
         uint32_t nKeys = 0;
+		Array keys;
+		
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, std::string)& entry, pwalletMain->mapAddressBook)
         {
             if (!IsDestMine(*pwalletMain, entry.first))
@@ -350,11 +363,18 @@ Value smsglocalkeys(const Array& params, bool fHelp)
             
             sPublicKey = EncodeBase58(pubKey.begin(), pubKey.end());
             
-            result.push_back(Pair("key", address + " - " + sPublicKey + " - " + entry.second));
+            Object objM;
+
+            objM.push_back(Pair("key", address));
+            objM.push_back(Pair("publickey", sPublicKey));
+            objM.push_back(Pair("label", entry.second));
+
+            keys.push_back(objM);
             nKeys++;
         };
         
-        result.push_back(Pair("result", strprintf("%u keys listed from wallet.", nKeys)));
+		result.push_back(Pair("keys", keys));
+        result.push_back(Pair("result", strprintf("%u", nKeys)));
     } else
     {
         result.push_back(Pair("result", "Unknown Mode."));
@@ -649,6 +669,8 @@ Value smsginbox(const Array& params, bool fHelp)
             dbInbox.TxnBegin();
             
             leveldb::Iterator* it = dbInbox.pdb->NewIterator(leveldb::ReadOptions());
+            Array messageList;
+			
             while (dbInbox.NextSmesg(it, sPrefix, chKey, smsgStored))
             {
                 if (fCheckReadStatus
@@ -659,16 +681,19 @@ Value smsginbox(const Array& params, bool fHelp)
                 if (SecureMsgDecrypt(false, smsgStored.sAddrTo, &smsgStored.vchMessage[0], &smsgStored.vchMessage[SMSG_HDR_LEN], nPayload, msg) == 0)
                 {
                     Object objM;
+					objM.push_back(Pair("success", "1"));
                     objM.push_back(Pair("received", getTimeString(smsgStored.timeReceived, cbuf, sizeof(cbuf))));
                     objM.push_back(Pair("sent", getTimeString(msg.timestamp, cbuf, sizeof(cbuf))));
                     objM.push_back(Pair("from", msg.sFromAddress));
                     objM.push_back(Pair("to", smsgStored.sAddrTo));
                     objM.push_back(Pair("text", std::string((char*)&msg.vchMessage[0]))); // ugh
                     
-                    result.push_back(Pair("message", objM));
+                    messageList.push_back(objM);
                 } else
                 {
-                    result.push_back(Pair("message", "Could not decrypt."));
+                    Object objM;
+                    objM.push_back(Pair("success", "0"));
+                    messageList.push_back(objM);
                 };
                 
                 if (fCheckReadStatus)
@@ -681,7 +706,8 @@ Value smsginbox(const Array& params, bool fHelp)
             delete it;
             dbInbox.TxnCommit();
             
-            result.push_back(Pair("result", strprintf("%u messages shown.", nMessages)));
+            result.push_back(Pair("messages", messageList));
+            result.push_back(Pair("result", strprintf("%u", nMessages)));
             
         } else
         {
@@ -752,6 +778,9 @@ Value smsgoutbox(const Array& params, bool fHelp)
             SecMsgStored smsgStored;
             MessageData msg;
             leveldb::Iterator* it = dbOutbox.pdb->NewIterator(leveldb::ReadOptions());
+			
+            Array messageList;
+			
             while (dbOutbox.NextSmesg(it, sPrefix, chKey, smsgStored))
             {
                 uint32_t nPayload = smsgStored.vchMessage.size() - SMSG_HDR_LEN;
@@ -759,21 +788,25 @@ Value smsgoutbox(const Array& params, bool fHelp)
                 if (SecureMsgDecrypt(false, smsgStored.sAddrOutbox, &smsgStored.vchMessage[0], &smsgStored.vchMessage[SMSG_HDR_LEN], nPayload, msg) == 0)
                 {
                     Object objM;
+					objM.push_back(Pair("success", "1"));
                     objM.push_back(Pair("sent", getTimeString(msg.timestamp, cbuf, sizeof(cbuf))));
                     objM.push_back(Pair("from", msg.sFromAddress));
                     objM.push_back(Pair("to", smsgStored.sAddrTo));
                     objM.push_back(Pair("text", std::string((char*)&msg.vchMessage[0]))); // ugh
                     
-                    result.push_back(Pair("message", objM));
+                    messageList.push_back(objM);
                 } else
                 {
-                    result.push_back(Pair("message", "Could not decrypt."));
+                    Object objM;
+                    objM.push_back(Pair("success", "0"));
+                    messageList.push_back(objM);
                 };
                 nMessages++;
             };
             delete it;
             
-            result.push_back(Pair("result", strprintf("%u sent messages shown.", nMessages)));
+			result.push_back(Pair("messages" ,messageList));
+            result.push_back(Pair("result", strprintf("%u", nMessages)));
         } else
         {
             result.push_back(Pair("result", "Unknown Mode."));

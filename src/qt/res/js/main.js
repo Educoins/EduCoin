@@ -1399,15 +1399,17 @@ function appendAddresses(addresses) {
     for(var i=0; i< addresses.length;i++)
     {
         var address = addresses[i];
+		
         var addrRow = $("#"+address.address);
-        var page = (address.type == "S" ? "#addressbook" : "#receive");
+        var page = (address.type == "S" ? "#addressbook" : (address.label.lastIndexOf("group_", 0) !== 0 ? "#receive" : "#addressbook"));
             
-        if(address.type == "R" && address.address.length < 75) {
-            if(addrRow.length==0)
+        if(address.type == "R" && address.address.length < 75 && address.label.lastIndexOf("group_", 0) !== 0) {
+            if(addrRow.length==0){
                 $("#message-from-address").append("<option title='"+address.address+"' value='"+address.address+"'>"+address.label+"</option>");
-            else
+            } else {
                 $("#message-from-address option[value="+address.address+"]").text(address.label);
-
+			}
+			
             if(initialAddress) {
                 $("#message-from-address").prepend("<option title='Anonymous' value='anon' selected>Anonymous</option>");
                 $(".user-name")   .text(Name);
@@ -1416,7 +1418,7 @@ function appendAddresses(addresses) {
             }
         }
         
-        if (addrRow.length==0)
+        if (addrRow.length==0 )
         {
             $( page + " .footable tbody").append(
                 "<tr id='"+address.address+"' lbl='"+address.label+"'>\
@@ -1852,6 +1854,7 @@ function appendMessages(messages, reset) {
                       message.received_date,
                       message.label_value,
                       message.label,
+					  message.labelTo,
                       message.to_address,
                       message.from_address,
                       message.read,
@@ -1867,7 +1870,7 @@ function appendMessages(messages, reset) {
 
 }
 
-function appendMessage(id, type, sent_date, received_date, label_value, label, to_address, from_address, read, message, initial) {
+function appendMessage(id, type, sent_date, received_date, label_value, label, labelTo, to_address, from_address, read, message, initial) {
     if(type=="R"&&read==false) {
         $(".user-notifications").show();
         $("#message-count").text(parseInt($("#message-count").text())+1);
@@ -1876,7 +1879,32 @@ function appendMessage(id, type, sent_date, received_date, label_value, label, t
     var them = type == "S" ? to_address   : from_address;
     var self = type == "S" ? from_address : to_address;
 
+    var label_msg = type == "S" ? (labelTo == "(no label)" ? self : labelTo) : (label == "(no label)" ? them : label);
+
     var key = (label_value == "" ? them : label_value).replace(/\s/g, '');
+
+	var group = false;
+    //Setup instructions: make sure the receiving address is named 'group_ANYTHING'. 
+    //It's best to add the sender of the message with a label so you get a nice overview!
+
+    /* This is just a cheat to test the formatting, because the if clause down below is always returning false.
+    It will put all messages under the same contact*/
+
+    if(type != "S" && labelTo.lastIndexOf("group_", 0) === 0){
+        key = labelTo.replace('group_', '');
+        //them = self;
+        group = true;
+    } else if(label_value.lastIndexOf("group_", 0) === 0){
+        key = label_value.replace('group_', '');
+        group = true;
+    } else if(labelTo.lastIndexOf("group_", 0) === 0){
+        group = true;
+    }
+
+    /* 
+    Basically I seperated the sender of the message (label_msg) from the contact[key].
+    So we can still group by the key, but the messages in the chat have the right sender label.
+    */
 
     var contact = contacts[key];
 
@@ -1884,13 +1912,13 @@ function appendMessage(id, type, sent_date, received_date, label_value, label, t
         contacts[key] = {},
         contact = contacts[key],
         contact.key = key,
-        contact.label = label,
+        contact.label = key,
         contact.avatar = (false ? '' : 'qrc:///images/default'), // TODO: Avatars!!
         contact.messages  = new Array();
 
     if($.grep(contact.messages, function(a){ return a.id == id; }).length == 0)
     {
-        contact.messages.push({id:id, them: them, self: self, message: message, type: type, sent: sent_date, received: received_date, read: read});
+        contact.messages.push({id:id, them: them, self: self, label_msg: label_msg, group: group, message: message, type: type, sent: sent_date, received: received_date, read: read});
 
         if(!initial)
             appendContact(key, true);
@@ -1931,6 +1959,7 @@ function appendContact (key, newcontact) {
             });
 
             var message;
+			var bSentMessage = false;
 
             for(var i=0;i<contact.messages.length;i++)
             {
@@ -1953,7 +1982,7 @@ function appendContact (key, newcontact) {
                     <span class='info'>\
                         <img src='"+contact.avatar+"' />\
                         <span class='user-name'>"
-                            +(message.type=='S'? (message.self == 'anon' ? 'anon' : Name) : contact.label)+"\
+                            +(message.type=='S'? (message.self == 'anon' ? 'anon' : message.label_msg) : message.label_msg)+"\
                         </span>\
                     </span>\
                     <span class='message-content'>\
@@ -1961,6 +1990,12 @@ function appendContact (key, newcontact) {
                         <span class='message-text'>"+micromarkdown.parse(message.message)+"</span>\
                         <span class='delete' onclick='deleteMessages(\""+contact.key+"\", \""+message.id+"\");'></span>\
                     </span></li>");
+
+                if(message.group && message.type == 'S' && !bSentMessage){ //Check if group message, if we sent a message in the past and make sure we assigned the same sender address to the chat.
+                        bSentMessage = true;
+                        $("#message-from-address").val(message.self);
+                        $("#message-to-address").val(message.them);
+                }
 
             }
 
@@ -1990,9 +2025,12 @@ function appendContact (key, newcontact) {
 
             //discussion.children("[title]").on("mouseenter", tooltip);
 
-            $("#message-from-address").val(message.self);
-            $("#message-to-address").val(message.them);
-
+            if(!bSentMessage){
+                $("#message-from-address").val(message.self);
+                $("#message-to-address").val(message.them);
+            }
+			
+			
         }).on("mouseenter", tooltip);
 
         contact_el.find(".delete").on("click", function(e) {e.stopPropagation()});

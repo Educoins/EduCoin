@@ -943,8 +943,7 @@ int SecureMsgAddWalletAddresses()
 
     uint32_t nAdded = 0;
 
-
-    BOOST_FOREACH(const PAIRTYPE(CTxDestination, std::string)& entry, pwalletMain->mapAddressBook)
+    BOOST_FOREACH(const PAIRTYPE(CTxDestination, std::string)& entry, pwalletMain->mapAddressBook) 
     {
         if (!IsDestMine(*pwalletMain, entry.first))
             continue;
@@ -1147,11 +1146,11 @@ bool SecureMsgStart(bool fDontStart, bool fScanChain)
     if (smsgAddresses.size() < 1)
     {
         LogPrintf("No address keys loaded.\n");
-        if (SecureMsgAddWalletAddresses() != 0)
+        if (SecureMsgAddWalletAddresses() != 0){ 
             LogPrintf("Failed to load addresses from wallet.\n");
-        else
+        } else {
             LogPrintf("Loaded addresses from wallet.\n");
-
+        }
     } else {
             LogPrintf("Loaded addresses from SMSG.ini\n");
     }
