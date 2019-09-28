@@ -71,8 +71,11 @@ public:
                 if (address.IsBIP32())
                 {
                     addrType = AT_BIP32;
-                } else
-                {
+                } else if (strName.startsWith("group_")){
+                     //find way to detect group address here, probably need to add extra parameter to address log
+                    addrType = AT_Group;
+                    strPubkey = parent->pubkeyForAddress(strAddress, false);
+                } else  {
                     addrType = AT_Normal;
                     strPubkey = parent->pubkeyForAddress(strAddress, false);
                 };

@@ -1906,6 +1906,21 @@ function appendMessage(id, type, sent_date, received_date, label_value, label, l
     Basically I seperated the sender of the message (label_msg) from the contact[key].
     So we can still group by the key, but the messages in the chat have the right sender label.
     */
+	
+    //INVITE TO GROUP CODE
+    if(message.lastIndexOf("/invite", 0) === 0 && message.length >= 61){
+       var group_key = message.substring(8, 60).replace(/[^A-Za-z0-9\s!?]/g, ""); // regex whitelist only a-z, A-Z, 0-9
+       var group_label = message.substring(61, message.length).replace(/[^A-Za-z0-9\s!?]/g, ""); // regex whitelist only a-z, A-Z, 0-9
+
+        if(group_label.length == 0)
+            group_label = them + "_" + group_key.substring(0, 5);
+
+        if(type = "R"){ //If message contains /invite privkey label, insert HTML
+            message = 'You\'ve been invited to a group named \'' + group_label + '\'! <a id="add-new-send-address" class="button is-inverse has-icon-spacing" onclick="bridge.joinGroupChat(\'' + group_key + '\',\'group_' + group_label + '\')"><i class="fa fa-plus"></i>Join group</a>';
+        } else if(type = "S"){
+            message = "An invite for group " + group_label + " has been sent.";
+        }
+    }
 
     var contact = contacts[key];
 
