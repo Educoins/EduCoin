@@ -76,6 +76,10 @@ public:
     /* Look up pubkey for address in address book, if not found return empty string.
      */
     QString pubkeyForAddress(const QString &address, const bool lookup=true) const;
+	
+	/* Derive address for pubkey, if invalid return empty string.
+     */
+    QString addressForPubkey(const QString &address) const;
 
     /* Look up row index of an address in the model.
        Return -1 if not found.

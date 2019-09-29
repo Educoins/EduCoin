@@ -64,3 +64,4 @@ const std::string CLIENT_NAME("EduCoin");
 
 const std::string CLIENT_BUILD(BUILD_DESC CLIENT_VERSION_SUFFIX);
 const std::string CLIENT_DATE(BUILD_DATE);
+const std::string CLIENT_LAST_COPYRIGHT("2019");

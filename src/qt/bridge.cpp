@@ -938,7 +938,12 @@ QString UIBridge::getPubKey(QString address, QString label)
     if(!label.isEmpty())
         updateAddressLabel(address, label);
 
-    return addressModel->atm->pubkeyForAddress(address);;
+    return addressModel->atm->pubkeyForAddress(address);
+}
+
+QString UI::addressForPubKey(QString pubkey)
+{
+    return addressModel->atm->addressForPubkey(pubkey);
 }
 
 bool UIBridge::setPubKey(QString address, QString pubkey)
