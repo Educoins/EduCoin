@@ -941,7 +941,7 @@ QString UIBridge::getPubKey(QString address, QString label)
     return addressModel->atm->pubkeyForAddress(address);
 }
 
-QString UI::addressForPubKey(QString pubkey)
+QString UIBridge::addressForPubKey(QString pubkey)
 {
     return addressModel->atm->addressForPubkey(pubkey);
 }
