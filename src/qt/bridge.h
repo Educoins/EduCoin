@@ -15,7 +15,6 @@ class SendCoinsRecipient;
 
 extern bool fWalletUnlockMessagingEnabled;
 
-
 class UIBridge : public QObject
 {
     Q_OBJECT
