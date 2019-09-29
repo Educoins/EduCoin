@@ -230,6 +230,17 @@ string CRPCTable::help(string strCommand) const
     return strRet;
 }
 
+std::vector<std::string> CRPCTable::listCommands() const
+{
+    std::vector<std::string> commandList;
+    typedef std::map<std::string, const CRPCCommand*> commandMap;
+
+    std::transform( mapCommands.begin(), mapCommands.end(),
+                   std::back_inserter(commandList),
+                   boost::bind(&commandMap::value_type::first,_1) );
+    return commandList;
+}
+
 Value help(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
